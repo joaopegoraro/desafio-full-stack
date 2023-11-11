@@ -1,0 +1,81 @@
+@import url("reset.css");
+
+:root {
+    --clr-light: #ffffff;
+    --clr-dark: #000000;
+
+    --clr-primary: #134c7f;
+    --clr-secondary: #46b553;
+    --clr-accent: #7f7f7f;
+
+    --fw-semi-bold: 600;
+    --fw-normal: 400;
+
+    --ff-body: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    --fs-400: 1rem;
+    --fs-600: 1.5rem;
+    --fs-700: 1.75rem;
+    --fs-800: 2rem;
+
+    --fs-body: var(--fs-400);
+    --fs-primary-heading: var(--fs-700);
+    --fs-secondary-heading: var(--fs-600);
+}
+
+@media (min-width: 48em) {
+    :root {
+        --fs-primary-heading: var(--fs-800);
+        --fs-secondary-heading: var(--fs-700);
+    }
+}
+
+/* || GENERAL STYLING */
+
+body {
+    font-size: var(--fs-body);
+    font-family: var(--ff-body);
+    font-weight: var(--fw-normal);
+    color: var(--clr-dark);
+    display: flex;
+    flex-direction: column;
+}
+
+a,
+h1,
+h2,
+h3 {
+    font-weight: var(--fw-semi-bold);
+}
+
+a {
+    text-decoration: none;
+    color: var(--clr-accent);
+}
+
+a:hover,
+a:focus {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: var(--fs-primary-heading);
+}
+
+h2 {
+    font-size: var(--fs-secondary-heading);
+}
+
+/* || COMPONENT STYLING */
+
+.u-flow> :where(:not(:first-child)) {
+    margin-top: 1em;
+    margin-top: var(--flow-space, 1em);
+}
+
+:where(.l-container) {
+    --max-width: 90rem;
+    --padding: 1.5rem;
+    width: min(var(--max-width), 100% - var(--padding) * 2);
+    margin-inline: auto;
+}
