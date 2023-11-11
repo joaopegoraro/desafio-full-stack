@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html th:fragment="layout (title, panel-form, panel-footer)" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html th:fragment="layout (title, panelForm, panelFooter)" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title th:replace="${title}"></title>
-
     <link rel="stylesheet" th:href="@{/css/auth.css}" />
 </head>
 <body>
@@ -13,9 +12,9 @@
             <img src="/img/logo-unoesc-colorido.png" alt="">
         </div>
         <div class="auth-panel__content">
-            <div th:replace="${panel-form}"></div>
+            <div th:replace="${panelForm}"></div>
         </div>
-        <div th:replace="${panel-footer}"></div>
+        <div th:replace="${panelFooter}"></div>
     </div>
 </main>
 </body>

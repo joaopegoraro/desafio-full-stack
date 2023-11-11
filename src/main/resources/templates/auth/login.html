@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{auth :: layout(~{::title}, ~{::#auth-form}), ~{::.l-auth__footer}}">
+      th:replace="~{auth/auth :: layout(~{ :: title}, ~{ :: #auth-form}, ~{ :: .l-auth__footer})}"
+      lang="pt-BR">
 <head>
     <title>Login</title>
 </head>
 <body>
 
-<form method="post" id="auth-form" action="/entrar">
+<form method="post" id="auth-form" action="/login">
     <fieldset class="auth-form" form="auth-form">
         <label class="auth-form__label" for="username">Usuário</label>
         <input class="auth-form__input" type="text" name="username" id="username"/>
