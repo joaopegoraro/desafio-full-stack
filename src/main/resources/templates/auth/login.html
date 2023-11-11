@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{auth/auth :: layout(~{ :: title}, ~{ :: #auth-form}, ~{ :: .l-auth__footer})}">
+    th:replace="~{auth/auth :: layout(~{ :: title}, ~{ :: #auth-form}, ~{ :: .auth__after-action})}">
 
 <head>
     <title>Login</title>
@@ -10,19 +10,31 @@
 
     <form method="post" id="auth-form" action="/login">
         <fieldset class="auth-form" form="auth-form">
-            <label class="auth-form__label" for="username">Usuário</label>
-            <input class="auth-form__input" type="text" name="username" id="username" />
+            <div class="auth-form__field">
+                <label class="auth-form__label">
+                    Usuário:<br>
+                    <input class="auth-form__input" type="text" name="username" id="username" />
+                </label>
+            </div>
 
-            <label class="auth-form__label" for="pwd">Senha:</label>
-            <input class="auth-form__input" id="pwd" type="password" name="pwd" maxlength="40" />
+            <div class="auth-form__field">
+                <label class="auth-form__label">
+                    Senha:<br>
+                    <input class="auth-form__input" id="pwd" type="password" name="pwd" maxlength="40" />
+                </label>
+            </div>
 
-            <input class="auth-form__button" value="Entrar" name="submit" id="submit" type="submit">
+            <div th:if="${errorMessage}">
+                <p th:insert="${errorMessage}" class="auth-form__error"></p>
+            </div>
+
+            <button type="submit" class="auth-form__btn | btn">Entrar</button>
         </fieldset>
     </form>
 
-    <div class="auth__footer">
-        <a href="/cadastrar">Ainda não possui conta?</a>
-    </div>
+    <a href="/cadastrar" class="auth__after-action" style="--action-icon: url('../icons/signup.svg');">
+        Ainda não possui conta?
+    </a>
 
 </body>
 
