@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{auth :: layout(~{::title}, ~{::#auth-form}), ~{::.l-auth__footer}}">
+<head>
+    <title>Login</title>
+</head>
+<body>
+
+<form method="post" id="auth-form" action="/entrar">
+    <fieldset class="auth-form" form="auth-form">
+        <label class="auth-form__label" for="username">Usuário</label>
+        <input class="auth-form__input" type="text" name="username" id="username"/>
+
+        <label class="auth-form__label" for="pwd">Senha:</label>
+        <input class="auth-form__input" id="pwd" type="password" name="pwd" maxlength="40"/>
+
+        <input class="auth-form__button" value="Entrar" name="submit" id="submit" type="submit">
+    </fieldset>
+</form>
+
+<div class="l-auth__footer">
+    <hr/>
+    <a href="/cadastrar">Ainda não possui conta?</a>
+</div>
+
+</body>
+</html>
