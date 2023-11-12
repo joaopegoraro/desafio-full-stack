@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
+    th:replace="~{persons/base :: layout(~{ :: title}, 'Cadastro de pessoa', ~{ :: #person-form})}">
+
+<head>
+    <title>Cadastrar Pessoa</title>
+</head>
+
+<body>
+
+    <form th:action="@{/pessoas/cadastro}" th:object="${person}" method="post" id="person-form"
+        action="/pessoas/cadastro">
+        <fieldset class="person-form | u-flow" form="auth-form">
+            <div class="person-form__fields">
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Nome:<br>
+                        <input required th:field="*{name}" class="person-form__input" type="text" name="name"
+                            id="name" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        CPF:<br>
+                        <input required th:field="*{cpf}" class="person-form__input" id="cpf" type="text" name="cpf" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Data de nascimento:<br>
+                        <input required th:field="*{birthdate}" class="person-form__input" id="birthdate" type="date"
+                            name="birthdate" />
+                    </label>
+                </div>
+
+                <div>
+                    <input type="radio" id="genderMale" name="gender" value="masculino" />
+                    <label for="genderMale">Masculino</label>
+
+                    <input type="radio" id="genderFemale" name="gender" value="feminino" />
+                    <label for="genderFemale">Feminino</label>
+
+                    <input type="radio" id="genderOther" name="gender" value="outro" />
+                    <label for="genderOther">Outro</label>
+                </div>
+            </div>
+
+            <div th:if="${errorMessage} != null" class="person-form__error">
+                <p th:text="${errorMessage}"></p>
+            </div>
+
+            <button type="submit" class="person-form__btn | btn">Cadastrar pessoa</button>
+        </fieldset>
+    </form>
+
+</body>
+
+</html>

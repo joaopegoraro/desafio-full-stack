@@ -1,12 +1,17 @@
 package br.edu.unoesc.desafiofullstack.models;
 
+import java.io.Serializable;
+import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
-public class Person {
+public class Person implements Serializable {
     @Id
     @GeneratedValue
     private long id;
@@ -17,8 +22,9 @@ public class Person {
     @Column(nullable = false)
     private String cpf;
 
+    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private String birthdate;
+    private Date birthdate;
 
     @Column(nullable = false)
     private String gender;
@@ -47,11 +53,11 @@ public class Person {
         this.cpf = cpf;
     }
 
-    public String getBirthdate() {
+    public Date getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(String birthdate) {
+    public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
 
