@@ -15,9 +15,27 @@
             <p>Ainda não existe nenhuma pessoa cadastrada</p>
         </div>
 
-        <div th:unless="${isListEmpty}">
-            <!-- TODO -->
-        </div>
+        <table class="person-table" th:unless="${isListEmpty}">
+            <thead class="person-table__head">
+                <th class="person-table__header">ID</th>
+                <th class="person-table__header">Nome</th>
+                <th class="person-table__header">CPF</th>
+                <th class="person-table__header">Nascimento</th>
+                <th class="person-table__header">Sexo</th>
+            </thead>
+            <tbody>
+                <tr class="person-table__row" th:each="person: ${list}">
+                    <td class="person-table__cell" th:text="${person.id}"></td>
+                    <td class="person-table__cell person-table__cell--fill" th:text="${person.name}"></td>
+                    <td class="person-table__cell" th:text="${person.cpf}"></td>
+                    <td class="person-table__cell" th:text="${person.birthdate}"></td>
+                    <td class="person-table__cell" th:text="${person.gender}"></td>
+                    <td class="person-table__cell person-table__cell--no-bg">
+                        <a class="person-table__detail-action | btn" th:href="|/pessoas/${person.id}|">Detalhes</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </body>
