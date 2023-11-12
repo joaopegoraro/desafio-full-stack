@@ -1,1 +1,43 @@
 @import url("root.css");
+
+.persons {
+    --gap: 2rem;
+}
+
+.persons__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.persons__logout-action {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.persons__logout-action::after {
+    content: "";
+    display: inline-block;
+    --size: 2rem;
+    height: var(--size);
+    width: var(--size);
+    background-image: url("../icons/login.svg");
+    background-size: contain;
+}
+
+.person-list__btn {
+    width: 20%;
+}
+
+.person-list__btn::before {
+    content: "";
+    display: inline-block;
+    --size: 2rem;
+    vertical-align: -25%;
+    height: var(--size);
+    width: var(--size);
+    background-image: url("../icons/person_add.svg");
+    background-size: contain;
+    margin-right: 1em;
+}

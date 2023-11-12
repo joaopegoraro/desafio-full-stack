@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{persons/base :: layout(~{ :: title}, ~{ :: .person-list})}">
+    th:replace="~{persons/base :: layout(~{ :: title}, 'Lista de pessoas', ~{ :: .person-list})}">
 
 <head>
     <title>Pessoas</title>
@@ -8,7 +8,9 @@
 
 <body>
 
-    <div class="person-list" th:with="isListEmpty = ${list == null or list.empty}">
+    <div class="person-list | u-flow" th:with="isListEmpty = ${list == null or list.empty}">
+        <a href="/pessoa/cadastrar" class="person-list__btn | btn btn--inverted">Cadastrar Pessoa</a>
+
         <div th:if="${isListEmpty}" class="person-list__empty">
             <p>Ainda não existe nenhuma pessoa cadastrada</p>
         </div>

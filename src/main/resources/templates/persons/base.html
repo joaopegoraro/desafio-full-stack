@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<html th:fragment="layout (title, sectionTitle, content)" xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title th:replace="${title}"></title>
-    <link rel="stylesheet" th:href="@{static/css/auth.css}" />
+    <link rel="stylesheet" th:href="@{static/css/persons.css}" />
     <link rel="icon" type="image/x-icon" href="static/icons/favicon.ico">
 </head>
 
 <body>
     <main>
-        <div class="persons l-container">
-            <a href="/logout" class="persons__logout-action">Sair</a>
+        <div class="persons | l-container u-flow">
+            <div class="persons__header">
+                <h1 th:text="${sectionTitle}"></h1>
+                <a href="/logout" class="persons__logout-action">Sair</a>
+            </div>
             <div class="persons__content">
                 <div th:replace="${content}"></div>
             </div>
