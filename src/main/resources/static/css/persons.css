@@ -73,6 +73,10 @@
     margin-inline-end: auto;
 }
 
+.person-table__caption {
+    text-align: start;
+}
+
 .person-table__header {
     text-align: start;
 }

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{persons/base :: layout(~{ :: title}, 'Cadastro de pessoa', ~{ :: #person-form})}">
+    th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa', ~{ :: #person-form})}">
 
 <head>
-    <title th:text="${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa'"></title>
+    <title th:text="${title} ? 'Editar Pessoa' : 'Cadastrar Pessoa'"></title>
 </head>
 
 <body>
 
-    <form th:action="@{/pessoas/cadastro}" th:object="${person}" method="post" id="person-form"
-        action="/pessoas/cadastro">
+    <form th:action="${editMode} ? |/pessoas/${person.id}/editar| : '/pessoas/cadastro'" th:object="${person}"
+        method="post" id="person-form">
         <fieldset class="person-form | u-flow" form="auth-form">
             <div class="person-form__fields">
                 <div class="person-form__field">
@@ -40,13 +40,16 @@
                     <label class="person-form__label">
                         Sexo:<br>
 
-                        <input type="radio" id="genderMale" name="gender" value="masculino" />
+                        <input required th:field="*{gender}" type="radio" id="genderMale" name="gender"
+                            value="masculino" />
                         <label for="genderMale">Masculino</label>
 
-                        <input type="radio" id="genderFemale" name="gender" value="feminino" />
+                        <input required th:field="*{gender}" type="radio" id="genderFemale" name="gender"
+                            value="feminino" />
                         <label for="genderFemale">Feminino</label>
 
-                        <input type="radio" id="genderOther" name="gender" value="outro" />
+                        <input required th:field="*{gender}" type="radio" id="genderOther" name="gender"
+                            value="outro" />
                         <label for="genderOther">Outro</label>
                     </label>
                 </div>
@@ -57,7 +60,7 @@
                     <p th:text="${errorMessage}"></p>
                 </div>
 
-                <button type="submit" class="btn">Cadastrar pessoa</button>
+                <button th:text="${title} ? 'Editar Pessoa' : 'Cadastrar Pessoa'" type="submit" class="btn"></button>
             </div>
         </fieldset>
     </form>

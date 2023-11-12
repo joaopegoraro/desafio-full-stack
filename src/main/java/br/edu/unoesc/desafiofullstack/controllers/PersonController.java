@@ -1,9 +1,12 @@
 package br.edu.unoesc.desafiofullstack.controllers;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.unoesc.desafiofullstack.models.Person;
@@ -30,10 +33,27 @@ public class PersonController {
         return "persons/register";
     }
 
+    @GetMapping("/pessoas/{id}")
+    public String getDetail(@PathVariable("id") Long id, Model model) {
+        try {
+            final Person person = personRepository.findById(id).get();
+            model.addAttribute("person", person);
+            return "persons/detail";
+        } catch (NoSuchElementException e) {
+            return "redirect:/error";
+        }
+    }
+
     @GetMapping("/pessoas/{id}/editar")
-    public String getEdit(Person person, Model model) {
+    public String getEdit(@PathVariable("id") Long id, Model model) {
         model.addAttribute("editMode", true);
-        return "persons/register";
+        try {
+            final Person person = personRepository.findById(id).get();
+            model.addAttribute("person", person);
+            return "persons/register";
+        } catch (NoSuchElementException e) {
+            return "redirect:/error";
+        }
     }
 
     @PostMapping("/pessoas/cadastro")
@@ -51,16 +71,22 @@ public class PersonController {
     }
 
     @PostMapping("/pessoas/{id}/editar")
-    public String postEdit(Person person, Model model) {
+    public String postEdit(@PathVariable("id") Long id, Person person, Model model) {
         model.addAttribute("editMode", true);
 
-        // mantém apenas os números do CPF
-        person.setCpf(person.getCpf().replaceAll("\\D+", ""));
-
         try {
+            person.setId(id);
+
+            // mantém apenas os números do CPF
+            person.setCpf(person.getCpf().replaceAll("\\D+", ""));
+
             personRepository.save(person);
+
             return "redirect:/";
+        } catch (NoSuchElementException e) {
+            return "redirect:/error";
         } catch (DataIntegrityViolationException e) {
+            e.printStackTrace();
             model.addAttribute("errorMessage", "Já existe uma pessoa cadastrada com esse CPF");
             return "persons/register";
         }
