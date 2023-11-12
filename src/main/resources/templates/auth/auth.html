@@ -16,11 +16,9 @@
             <div class="auth__content">
                 <div th:replace="${panelForm}"></div>
             </div>
-            <div th:if="${panelFooter}">
-                <div class="auth__footer">
-                    <hr>
-                    <div th:replace="${panelFooter}"></div>
-                </div>
+            <div class="auth__footer" th:if="${panelFooter}">
+                <hr>
+                <div th:replace="${panelFooter}"></div>
             </div>
         </div>
     </main>

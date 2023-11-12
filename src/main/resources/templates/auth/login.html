@@ -24,8 +24,8 @@
                 </label>
             </div>
 
-            <div th:if="${errorMessage}">
-                <p th:insert="${errorMessage}" class="auth-form__error"></p>
+            <div th:if="${errorMessage}" class="auth-form__error">
+                <p th:insert="${errorMessage}"></p>
             </div>
 
             <button type="submit" class="auth-form__btn | btn">Entrar</button>
