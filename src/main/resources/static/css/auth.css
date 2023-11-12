@@ -8,11 +8,7 @@ main {
 }
 
 .auth {
-    background-color: var(--clr-light);
-    box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.2);
     max-width: 22.5rem;
-    border-radius: 0.3rem;
-    padding: 3rem;
 }
 
 .auth__header {
@@ -25,6 +21,14 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.auth__action--login {
+    --action-icon: url('../icons/login.svg');
+}
+
+.auth__action--register {
+    --action-icon: url('../icons/signup.svg');
 }
 
 .auth__action::after {

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
+    th:replace="~{persons/base :: layout(~{ :: title}, ~{ :: .person-list})}">
+
+<head>
+    <title>Pessoas</title>
+</head>
+
+<body>
+
+    <div class="person-list" th:with="isListEmpty = ${list == null or list.empty}">
+        <div th:if="${isListEmpty}" class="person-list__empty">
+            <p>Ainda não existe nenhuma pessoa cadastrada</p>
+        </div>
+
+        <div th:unless="${isListEmpty}">
+            <!-- TODO -->
+        </div>
+    </div>
+
+</body>
+
+</html>

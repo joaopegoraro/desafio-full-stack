@@ -32,7 +32,7 @@ public class AuthController {
         return "auth/login";
     }
 
-    @PostMapping(path = "/login")
+    @PostMapping("/login")
     public String postLogin(LoginDto loginDto, HttpServletRequest request, Model model) {
         try {
             final String username = loginDto.getUsername();
@@ -60,7 +60,7 @@ public class AuthController {
         return "auth/register";
     }
 
-    @PostMapping(path = "/cadastro")
+    @PostMapping("/cadastro")
     public String postRegister(RegisterDto registerDto, HttpServletRequest request, Model model) {
         if (!registerDto.isPasswordValid()) {
             model.addAttribute("errorMessage", "A senha deve conter entre 6 e 40 caracteres");
