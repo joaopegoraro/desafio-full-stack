@@ -57,8 +57,9 @@ public class AuthService {
         }
     }
 
-    public void createAccount(User userDto) throws InternalException {
-        final User user = userRepository.save(userDto);
+    public void createAccount(String username, String password) throws InternalException {
+        User user = new User(username);
+        user = userRepository.save(user);
         final Hash hash = new Hash();
         hash.setUsername(user.getUsername());
         try {
