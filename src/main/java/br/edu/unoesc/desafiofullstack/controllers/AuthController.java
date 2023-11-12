@@ -24,11 +24,7 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public String getLogin(HttpServletRequest request) {
-        final HttpSession session = request.getSession();
-        if (authService.isUserAuthenticated(session)) {
-            return "redirect:/";
-        }
+    public String getLogin() {
         return "auth/login";
     }
 
@@ -52,11 +48,7 @@ public class AuthController {
     }
 
     @GetMapping("/cadastro")
-    public String getRegister(RegisterDto registerDto, HttpServletRequest request) {
-        final HttpSession session = request.getSession();
-        if (authService.isUserAuthenticated(session)) {
-            return "redirect:/";
-        }
+    public String getRegister(RegisterDto registerDto) {
         return "auth/register";
     }
 
@@ -67,11 +59,13 @@ public class AuthController {
             registerDto.clearPasswords();
             return "auth/register";
         }
+
         if (!registerDto.arePasswordsEqual()) {
             model.addAttribute("errorMessage", "As senhas devem ser iguais");
             registerDto.clearPasswords();
             return "auth/register";
         }
+
         try {
             final String username = registerDto.getUsername();
             final String password = registerDto.getPassword();
