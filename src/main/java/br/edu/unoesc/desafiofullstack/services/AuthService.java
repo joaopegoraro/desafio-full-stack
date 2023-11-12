@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import br.edu.unoesc.desafiofullstack.exceptions.BadCredentialsException;
 import br.edu.unoesc.desafiofullstack.exceptions.InternalException;
 import br.edu.unoesc.desafiofullstack.exceptions.UserAlreadyRegisteredException;
-import br.edu.unoesc.desafiofullstack.models.Hash;
 import br.edu.unoesc.desafiofullstack.models.User;
-import br.edu.unoesc.desafiofullstack.repositories.HashRepository;
 import br.edu.unoesc.desafiofullstack.repositories.UserRepository;
 import br.edu.unoesc.desafiofullstack.utils.PasswordHasher;
 import jakarta.servlet.http.HttpSession;
@@ -19,11 +17,9 @@ import jakarta.servlet.http.HttpSession;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final HashRepository hashRepository;
 
-    public AuthService(UserRepository userRepository, HashRepository hashRepository) {
+    public AuthService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.hashRepository = hashRepository;
     }
 
     public boolean isUserAuthenticated(HttpSession session) {
@@ -43,17 +39,12 @@ public class AuthService {
     }
 
     public void performLogin(String username, String password) throws BadCredentialsException, InternalException {
-        final Hash hash = hashRepository
+        final User user = userRepository
                 .findById(username)
                 .orElseThrow(() -> new BadCredentialsException());
 
-        if (userRepository.findById(username).isEmpty()) {
-            hashRepository.deleteById(username);
-            throw new BadCredentialsException();
-        }
-
         try {
-            final boolean isPasswordValid = PasswordHasher.validatePassword(password, hash.getHash());
+            final boolean isPasswordValid = PasswordHasher.validatePassword(password, user.getHash());
             if (!isPasswordValid) {
                 throw new BadCredentialsException();
             }
@@ -68,18 +59,13 @@ public class AuthService {
             throw new UserAlreadyRegisteredException();
         }
 
-        User user = new User(username);
-        user = userRepository.save(user);
-
-        final Hash hash = new Hash();
-        hash.setUsername(user.getUsername());
-
         try {
-            hash.setHash(PasswordHasher.hashPassword(user.getUsername()));
+            User user = new User();
+            user.setUsername(username);
+            user.setHash(PasswordHasher.hashPassword(password));
+            user = userRepository.save(user);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new InternalException(e);
         }
-
-        hashRepository.save(hash);
     }
 }
