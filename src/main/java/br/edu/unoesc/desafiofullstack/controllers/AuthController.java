@@ -51,4 +51,13 @@ public class AuthController {
             return "redirect:/error";
         }
     }
+
+    @GetMapping("/cadastrar")
+    public String getRegister(HttpServletRequest request) {
+        final HttpSession session = request.getSession();
+        if (authService.isUserAuthenticated(session)) {
+            return "redirect:/";
+        }
+        return "auth/register";
+    }
 }

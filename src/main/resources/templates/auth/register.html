@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
+    th:replace="~{auth/auth :: layout(~{ :: title}, ~{ :: #auth-form}, ~{ :: .auth__action})}">
+
+<head>
+    <title>Cadastrar</title>
+</head>
+
+<body>
+
+    <form th:action="@{/cadastrar}" th:object="${registerDto}" method="post" id="auth-form" action="/cadastrar">
+        <fieldset class="auth-form" form="auth-form">
+            <div class="auth-form__field">
+                <label class="auth-form__label">
+                    Usuário:<br>
+                    <input th:field="*{username}" class="auth-form__input" type="text" name="username" id="username" />
+                </label>
+            </div>
+
+            <div class="auth-form__field">
+                <label class="auth-form__label">
+                    Senha:<br>
+                    <input th:field="*{password}" class="auth-form__input" id="password" type="password" name="password"
+                        minlength="8" maxlength="40" />
+                </label>
+            </div>
+
+            <div class="auth-form__field">
+                <label class="auth-form__label">
+                    Repetir Senha:<br>
+                    <input th:field="*{repeatPassword}" class="auth-form__input" id="repeatPassword" type="password"
+                        name="repeatPassword" minlength="8" maxlength="40" />
+                </label>
+            </div>
+
+            <div th:if="${errorMessage}" class="auth-form__error">
+                <p th:insert="${errorMessage}"></p>
+            </div>
+
+            <button type="submit" class="auth-form__btn | btn">Criar conta</button>
+        </fieldset>
+    </form>
+
+    <a href="/login" class="auth__action" style="--action-icon: url('../icons/login.svg');">
+        Já possui conta?
+    </a>
+
+</body>
+
+</html>

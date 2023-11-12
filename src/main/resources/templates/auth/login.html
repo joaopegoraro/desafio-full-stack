@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{auth/auth :: layout(~{ :: title}, ~{ :: #auth-form}, ~{ :: .auth__after-action})}">
+    th:replace="~{auth/auth :: layout(~{ :: title}, ~{ :: #auth-form}, ~{ :: .auth__action})}">
 
 <head>
     <title>Login</title>
@@ -32,7 +32,7 @@
         </fieldset>
     </form>
 
-    <a href="/cadastrar" class="auth__after-action" style="--action-icon: url('../icons/signup.svg');">
+    <a href="/cadastrar" class="auth__action" style="--action-icon: url('../icons/signup.svg');">
         Ainda não possui conta?
     </a>
 

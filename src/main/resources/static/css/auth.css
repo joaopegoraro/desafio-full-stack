@@ -20,16 +20,14 @@ main {
     margin-inline: auto;
 }
 
-.auth__before-action,
-.auth__after-action {
+.auth__action {
     margin-top: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.auth__before-action::before,
-.auth__after-action::after {
+.auth__action::after {
     content: "";
     display: inline-block;
     --size: 2rem;
