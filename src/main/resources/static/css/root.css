@@ -88,6 +88,13 @@ input:focus {
     --input-color: var(--clr-primary);
 }
 
+main {
+    height: 100vh;
+    background: linear-gradient(239deg, var(--clr-secondary) 0%, var(--clr-primary) 100%);
+    display: flex;
+    align-items: center;
+}
+
 /* || COMPONENT STYLING */
 
 .u-flow> :where(:not(:first-child)) {

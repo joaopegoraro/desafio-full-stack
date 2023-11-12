@@ -1,12 +1,5 @@
 @import url("root.css");
 
-main {
-    height: 100vh;
-    background: linear-gradient(239deg, var(--clr-secondary) 0%, var(--clr-primary) 100%);
-    display: flex;
-    align-items: center;
-}
-
 .auth {
     max-width: 22.5rem;
 }

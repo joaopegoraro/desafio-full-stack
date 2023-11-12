@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.edu.unoesc.desafiofullstack.dtos.LoginDto;
 import br.edu.unoesc.desafiofullstack.dtos.RegisterDto;
@@ -28,6 +30,17 @@ public class AuthController {
         return "auth/login";
     }
 
+    @GetMapping("/cadastro")
+    public String getRegister(RegisterDto registerDto) {
+        return "auth/register";
+    }
+
+    @RequestMapping(path = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
+    public String logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return "auth/login";
+    }
+
     @PostMapping("/login")
     public String postLogin(LoginDto loginDto, HttpServletRequest request, Model model) {
         try {
@@ -45,11 +58,6 @@ public class AuthController {
         } catch (InternalException e) {
             return "redirect:/error";
         }
-    }
-
-    @GetMapping("/cadastro")
-    public String getRegister(RegisterDto registerDto) {
-        return "auth/register";
     }
 
     @PostMapping("/cadastro")
