@@ -13,23 +13,24 @@
             <div class="auth-form__field">
                 <label class="auth-form__label">
                     Usuário:<br>
-                    <input th:field="*{username}" class="auth-form__input" type="text" name="username" id="username" />
+                    <input required th:field="*{username}" class="auth-form__input" type="text" name="username"
+                        id="username" />
                 </label>
             </div>
 
             <div class="auth-form__field">
                 <label class="auth-form__label">
                     Senha:<br>
-                    <input th:field="*{password}" class="auth-form__input" id="password" type="password" name="password"
-                        minlength="8" maxlength="40" />
+                    <input required th:field="*{password}" class="auth-form__input" id="password" type="password"
+                        name="password" minlength="8" maxlength="40" />
                 </label>
             </div>
 
             <div class="auth-form__field">
                 <label class="auth-form__label">
                     Repetir Senha:<br>
-                    <input th:field="*{repeatPassword}" class="auth-form__input" id="repeatPassword" type="password"
-                        name="repeatPassword" minlength="8" maxlength="40" />
+                    <input required th:field="*{repeatPassword}" class="auth-form__input" id="repeatPassword"
+                        type="password" name="repeatPassword" minlength="8" maxlength="40" />
                 </label>
             </div>
 
