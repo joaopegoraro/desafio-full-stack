@@ -38,14 +38,17 @@ public class AuthService {
     }
 
     public void performLogin(String username, String password) throws BadCredentialsException, InternalException {
-        final Hash hash = hashRepository.findById(username).orElseThrow(() -> new BadCredentialsException());
+        final Hash hash = hashRepository
+                .findById(username)
+                .orElseThrow(() -> new BadCredentialsException());
+
         if (userRepository.findById(username).isEmpty()) {
             hashRepository.deleteById(username);
             throw new BadCredentialsException();
         }
 
         try {
-            final boolean isPasswordValid = !PasswordHasher.validatePassword(password, hash.getHash());
+            final boolean isPasswordValid = PasswordHasher.validatePassword(password, hash.getHash());
             if (!isPasswordValid) {
                 throw new BadCredentialsException();
             }
