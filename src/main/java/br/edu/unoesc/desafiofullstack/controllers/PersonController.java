@@ -82,11 +82,10 @@ public class PersonController {
 
             personRepository.save(person);
 
-            return "redirect:/";
+            return "redirect:/pessoas/" + id;
         } catch (NoSuchElementException e) {
             return "redirect:/error";
         } catch (DataIntegrityViolationException e) {
-            e.printStackTrace();
             model.addAttribute("errorMessage", "Já existe uma pessoa cadastrada com esse CPF");
             return "persons/register";
         }

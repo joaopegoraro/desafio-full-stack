@@ -111,3 +111,22 @@
     background-size: contain;
     margin-left: 1em;
 }
+
+.person-details__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.person-details__field {
+    display: inline;
+}
+
+.person-details__label {
+    color: var(--clr-primary);
+    font-weight: var(--fw-semi-bold);
+}
+
+.person-details__ruler {
+    margin-bottom: 2rem;
+}
