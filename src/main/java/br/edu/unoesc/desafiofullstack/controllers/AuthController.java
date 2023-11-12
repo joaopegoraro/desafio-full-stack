@@ -3,11 +3,14 @@ package br.edu.unoesc.desafiofullstack.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.unoesc.desafiofullstack.dtos.LoginDto;
+import br.edu.unoesc.desafiofullstack.dtos.RegisterDto;
 import br.edu.unoesc.desafiofullstack.exceptions.BadCredentialsException;
 import br.edu.unoesc.desafiofullstack.exceptions.InternalException;
+import br.edu.unoesc.desafiofullstack.exceptions.UserAlreadyRegisteredException;
 import br.edu.unoesc.desafiofullstack.services.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -52,12 +55,47 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/cadastrar")
-    public String getRegister(HttpServletRequest request) {
+    @GetMapping("/cadastro")
+    public String getRegister(
+            @ModelAttribute RegisterDto registerDto,
+            HttpServletRequest request) {
         final HttpSession session = request.getSession();
         if (authService.isUserAuthenticated(session)) {
             return "redirect:/";
         }
         return "auth/register";
+    }
+
+    @PostMapping(path = "/cadastro")
+    public String postRegister(
+            @ModelAttribute RegisterDto registerDto,
+            HttpServletRequest request,
+            Model model) {
+        if (!registerDto.isPasswordValid()) {
+            model.addAttribute("errorMessage", "A senha deve conter entre 6 e 40 caracteres");
+            registerDto.clearPasswords();
+            return "auth/register";
+        }
+        if (!registerDto.arePasswordsEqual()) {
+            model.addAttribute("errorMessage", "As senhas devem ser iguais");
+            registerDto.clearPasswords();
+            return "auth/register";
+        }
+        try {
+            final String username = registerDto.getUsername();
+            final String password = registerDto.getPassword();
+            authService.createAccount(username, password);
+
+            final HttpSession session = request.getSession();
+            authService.authenticateSession(session, username);
+
+            return "redirect:/";
+        } catch (UserAlreadyRegisteredException e) {
+            model.addAttribute("errorMessage", "Já existe um usuário cadastrado com esse nome de usuário");
+            registerDto.clearPasswords();
+            return "auth/register";
+        } catch (InternalException e) {
+            return "redirect:/error";
+        }
     }
 }

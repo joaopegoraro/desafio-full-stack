@@ -8,6 +8,19 @@ public class RegisterDto implements Serializable {
     private String password;
     private String repeatPassword;
 
+    public boolean isPasswordValid() {
+        return 6 <= password.length() && password.length() <= 40;
+    }
+
+    public boolean arePasswordsEqual() {
+        return password.equals(repeatPassword);
+    }
+
+    public void clearPasswords() {
+        this.password = "";
+        this.repeatPassword = "";
+    }
+
     public String getUsername() {
         return username;
     }

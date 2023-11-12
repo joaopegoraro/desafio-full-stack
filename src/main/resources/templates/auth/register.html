@@ -8,7 +8,7 @@
 
 <body>
 
-    <form th:action="@{/cadastrar}" th:object="${registerDto}" method="post" id="auth-form" action="/cadastrar">
+    <form th:action="@{/cadastro}" th:object="${registerDto}" method="post" id="auth-form" action="/cadastro">
         <fieldset class="auth-form" form="auth-form">
             <div class="auth-form__field">
                 <label class="auth-form__label">
@@ -22,7 +22,7 @@
                 <label class="auth-form__label">
                     Senha:<br>
                     <input required th:field="*{password}" class="auth-form__input" id="password" type="password"
-                        name="password" minlength="8" maxlength="40" />
+                        name="password" minlength="6" maxlength="40" />
                 </label>
             </div>
 
@@ -30,12 +30,12 @@
                 <label class="auth-form__label">
                     Repetir Senha:<br>
                     <input required th:field="*{repeatPassword}" class="auth-form__input" id="repeatPassword"
-                        type="password" name="repeatPassword" minlength="8" maxlength="40" />
+                        type="password" name="repeatPassword" minlength="6" maxlength="40" />
                 </label>
             </div>
 
-            <div th:if="${errorMessage}" class="auth-form__error">
-                <p th:insert="${errorMessage}"></p>
+            <div th:if="${errorMessage} != null" class="auth-form__error">
+                <p th:text="${errorMessage}"></p>
             </div>
 
             <button type="submit" class="auth-form__btn | btn">Criar conta</button>

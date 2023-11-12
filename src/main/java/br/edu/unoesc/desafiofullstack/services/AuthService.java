@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.unoesc.desafiofullstack.exceptions.BadCredentialsException;
 import br.edu.unoesc.desafiofullstack.exceptions.InternalException;
+import br.edu.unoesc.desafiofullstack.exceptions.UserAlreadyRegisteredException;
 import br.edu.unoesc.desafiofullstack.models.Hash;
 import br.edu.unoesc.desafiofullstack.models.User;
 import br.edu.unoesc.desafiofullstack.repositories.HashRepository;
@@ -33,8 +34,12 @@ public class AuthService {
         }
     }
 
-    public void authenticateSession(HttpSession session, String username) {
-        session.setAttribute("username", username);
+    public void authenticateSession(HttpSession session, String username) throws InternalException {
+        try {
+            session.setAttribute("username", username);
+        } catch (IllegalStateException e) {
+            throw new InternalException(e);
+        }
     }
 
     public void performLogin(String username, String password) throws BadCredentialsException, InternalException {
@@ -57,16 +62,24 @@ public class AuthService {
         }
     }
 
-    public void createAccount(String username, String password) throws InternalException {
+    public void createAccount(String username, String password)
+            throws InternalException, UserAlreadyRegisteredException {
+        if (userRepository.findById(username).isPresent()) {
+            throw new UserAlreadyRegisteredException();
+        }
+
         User user = new User(username);
         user = userRepository.save(user);
+
         final Hash hash = new Hash();
         hash.setUsername(user.getUsername());
+
         try {
             hash.setHash(PasswordHasher.hashPassword(user.getUsername()));
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new InternalException(e);
         }
+
         hashRepository.save(hash);
     }
 }
