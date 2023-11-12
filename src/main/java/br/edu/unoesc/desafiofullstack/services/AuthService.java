@@ -55,7 +55,7 @@ public class AuthService {
 
     public void createAccount(String username, String password)
             throws InternalException, UserAlreadyRegisteredException {
-        if (userRepository.findById(username).isPresent()) {
+        if (userRepository.existsById(username)) {
             throw new UserAlreadyRegisteredException();
         }
 

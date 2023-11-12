@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
+    th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa', ~{ :: #person-form})}">
+
+<head>
+    <title th:text="${title} ? 'Editar Pessoa' : 'Cadastrar Pessoa'"></title>
+</head>
+
+<body>
+
+    <form th:action="${editMode} ? |/pessoas/${person.id}/editar| : '/pessoas/cadastro'" th:object="${person}"
+        method="post" id="person-form">
+        <fieldset class="person-form | u-flow" form="auth-form">
+            <div class="person-form__fields">
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Nome:<br>
+                        <input required th:field="*{name}" class="person-form__input" type="text" name="name"
+                            id="name" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        CPF:<br>
+                        <input required th:field="*{cpf}" class="person-form__input" id="cpf" type="text" name="cpf"
+                            pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Data de nascimento:<br>
+                        <input required th:field="*{birthdate}" class="person-form__input" id="birthdate" type="date"
+                            name="birthdate" />
+                    </label>
+                </div>
+
+                <div>
+                    <label class="person-form__label">
+                        Sexo:<br>
+
+                        <input required th:field="*{gender}" type="radio" id="genderMale" name="gender"
+                            value="masculino" />
+                        <label for="genderMale">Masculino</label>
+
+                        <input required th:field="*{gender}" type="radio" id="genderFemale" name="gender"
+                            value="feminino" />
+                        <label for="genderFemale">Feminino</label>
+
+                        <input required th:field="*{gender}" type="radio" id="genderOther" name="gender"
+                            value="outro" />
+                        <label for="genderOther">Outro</label>
+                    </label>
+                </div>
+            </div>
+
+            <div class="person-form__footer | u-flow">
+                <div th:if="${errorMessage} != null" class="person-form__error">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <button th:text="${title} ? 'Editar Pessoa' : 'Cadastrar Pessoa'" type="submit" class="btn"></button>
+            </div>
+        </fieldset>
+    </form>
+
+</body>
+
+</html>

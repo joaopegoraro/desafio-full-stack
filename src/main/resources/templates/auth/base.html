@@ -4,14 +4,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title th:replace="${title}"></title>
-    <link rel="stylesheet" th:href="@{/css/auth.css}" />
+    <link rel="stylesheet" href="/static/css/auth.css" />
+    <link rel="icon" type="image/x-icon" href="static/icons/favicon.ico">
 </head>
 
 <body>
     <main>
         <div class="auth | l-container u-flow">
             <div class="auth__header">
-                <img th:src="@{/img/logo-unoesc-colorido.png}" alt="">
+                <img th:src="/static/img/logo-unoesc-colorido.png" alt="">
             </div>
             <div class="auth__content">
                 <div th:replace="${panelForm}"></div>

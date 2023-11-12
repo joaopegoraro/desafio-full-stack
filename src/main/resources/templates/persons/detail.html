@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
+    th:replace="~{persons/base :: layout(~{ :: title}, ${person.name}, ~{ :: .person-details})}">
+
+<head>
+    <title th:text="|Detalhes de ${person.name}|"></title>
+</head>
+
+<body>
+
+    <div class="person-details | u-flow">
+        <div class="person-details__info">
+            <h2>Detalhes</h2>
+
+            <a th:href="|/pessoas/${person.id}/editar|" class="person-list__btn | btn btn--inverted">Editar
+                dados</a>
+
+            <div class="person-details__field">
+                <span class="person-details__label">ID:</span>
+                <span th:text="${person.id}" class="person-details__value"></span>
+            </div>
+
+            <div class="person-details__field">
+                <div class="person-details__label">Nome:</div>
+                <div th:text="${person.name}" class="person-details__value"></div>
+            </div>
+
+            <div class="person-details__field">
+                <div class="person-details__label">CPF:</div>
+                <div th:text="${person.cpf}" class="person-details__value"></div>
+            </div>
+
+            <div class="person-details__field">
+                <div class="person-details__label">Nascimento:</div>
+                <div th:text="${person.birthdate}" class="person-details__value"></div>
+            </div>
+
+            <div class="person-details__field">
+                <div class="person-details__label">Sexo:</div>
+                <div th:text="${person.gender.toUpperCase()}" class="person-details__value"></div>
+            </div>
+        </div>
+
+        <hr class="person-details__ruler">
+
+        <div class="u-flow" th:with="isListEmpty = ${contacts == null or contacts.empty}">
+            <a th:href="|/pessoas/${person.id}/contatos/cadastrar|" class="person-list__btn | btn btn--inverted">
+                Adicionar contato
+            </a>
+
+
+            <table th:with="isListEmpty = ${contacts == null or contacts.empty}" class="person-table">
+                <caption class="person-table__caption">
+                    <h2>Contatos</h2>
+                </caption>
+
+                <thead th:unless="${isListEmpty}" class="person-table__head">
+                    <th class="person-table__header">ID</th>
+                    <th class="person-table__header">Nome</th>
+                    <th class="person-table__header">Telefone</th>
+                    <th class="person-table__header">E-mail</th>
+                </thead>
+
+                <tbody th:unless="${isListEmpty}">
+                    <tr class="person-table__row" th:each="contact: ${contacts}">
+                        <td class="person-table__cell" th:text="${contact.id}"></td>
+                        <td class="person-table__cell person-table__cell--fill" th:text="${contact.name}"></td>
+                        <td class="person-table__cell" th:text="${contact.phone}"></td>
+                        <td class="person-table__cell" th:text="${contact.email}"></td>
+                        <td class="person-table__cell person-table__cell--no-bg">
+                            <a class="person-table__detail-action | btn"
+                                th:href="|/pessoas/${person.id}/contatos/${contact.id}|">Detalhes</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <tbody th:if="${isListEmpty}" class="person-list__empty">
+                <p>Ainda não existe nenhum contato cadastrado</p>
+            </tbody>
+        </div>
+
+        <hr class="person-details__ruler">
+
+        <div class="u-flow" th:with="isListEmpty = ${addresses == null or addresses.empty}">
+            <a th:href="|/pessoas/${person.id}/enderecos/cadastrar|" class="person-list__btn | btn btn--inverted">
+                Adicionar endereço
+            </a>
+
+            <table class="person-table">
+                <caption class="person-table__caption">
+                    <h2>Endereços</h2>
+                </caption>
+
+                <thead th:unless="${isListEmpty}" class="person-table__head">
+                    <th class="person-table__header">ID</th>
+                    <th class="person-table__header">Nome</th>
+                    <th class="person-table__header">CEP</th>
+                    <th class="person-table__header">Logradouro</th>
+                    <th class="person-table__header">Número</th>
+                    <th class="person-table__header">Bairro</th>
+                    <th class="person-table__header">Município</th>
+                    <th class="person-table__header">Estado</th>
+                </thead>
+
+                <tbody th:unless="${isListEmpty}">
+                    <tr class="person-table__row" th:each="address: ${addresses}">
+                        <td class="person-table__cell" th:text="${address.id}"></td>
+                        <td class="person-table__cell person-table__cell--fill" th:text="${address.name}"></td>
+                        <td class="person-table__cell" th:text="${address.cep}"></td>
+                        <td class="person-table__cell" th:text="${address.street}"></td>
+                        <td class="person-table__cell" th:text="${address.number}"></td>
+                        <td class="person-table__cell" th:text="${address.district}"></td>
+                        <td class="person-table__cell" th:text="${address.city}"></td>
+                        <td class="person-table__cell" th:text="${address.state}"></td>
+                        <td class="person-table__cell person-table__cell--no-bg">
+                            <a class="person-table__detail-action | btn"
+                                th:href="|/pessoas/${person.id}/contatos/${contact.id}|">Detalhes</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <tbody th:if="${isListEmpty}" class="person-list__empty">
+                <p>Ainda não existe nenhum endereço cadastrado</p>
+            </tbody>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

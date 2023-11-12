@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
+    th:replace="~{persons/base :: layout(~{ :: title}, 'Lista de pessoas', ~{ :: .person-list})}">
+
+<head>
+    <title>Pessoas</title>
+</head>
+
+<body>
+
+    <div class="person-list | u-flow" th:with="isListEmpty = ${list == null or list.empty}">
+        <a href="/pessoas/cadastro" class="person-list__btn | btn btn--inverted">Cadastrar Pessoa</a>
+
+        <div th:if="${isListEmpty}" class="person-list__empty">
+            <p>Ainda não existe nenhuma pessoa cadastrada</p>
+        </div>
+
+        <table class="person-table" th:unless="${isListEmpty}">
+            <thead class="person-table__head">
+                <th class="person-table__header">ID</th>
+                <th class="person-table__header">Nome</th>
+                <th class="person-table__header">CPF</th>
+                <th class="person-table__header">Nascimento</th>
+                <th class="person-table__header">Sexo</th>
+            </thead>
+            <tbody>
+                <tr class="person-table__row" th:each="person: ${list}">
+                    <td class="person-table__cell" th:text="${person.id}"></td>
+                    <td class="person-table__cell person-table__cell--fill" th:text="${person.name}"></td>
+                    <td class="person-table__cell" th:text="${person.cpf}"></td>
+                    <td class="person-table__cell" th:text="${person.birthdate}"></td>
+                    <td class="person-table__cell" th:text="${person.gender}"></td>
+                    <td class="person-table__cell person-table__cell--no-bg">
+                        <a class="person-table__detail-action | btn" th:href="|/pessoas/${person.id}|">Detalhes</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
