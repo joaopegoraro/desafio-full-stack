@@ -62,6 +62,8 @@ main {
 
 .auth-form__error {
     color: var(--clr-error);
+    text-align: start;
+    margin-inline-end: auto;
 }
 
 .auth-form__btn {

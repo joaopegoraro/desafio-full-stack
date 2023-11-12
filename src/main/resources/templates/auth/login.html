@@ -20,12 +20,12 @@
             <div class="auth-form__field">
                 <label class="auth-form__label">
                     Senha:<br>
-                    <input class="auth-form__input" id="pwd" type="password" name="pwd" maxlength="40" />
+                    <input class="auth-form__input" id="password" type="password" name="password" maxlength="40" />
                 </label>
             </div>
 
-            <div th:if="${errorMessage}" class="auth-form__error">
-                <p th:insert="${errorMessage}"></p>
+            <div th:if="${loginError}" class="auth-form__error">
+                <p>Usuário ou senha incorretos</p>
             </div>
 
             <button type="submit" class="auth-form__btn | btn">Entrar</button>
