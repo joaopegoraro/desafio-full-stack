@@ -13,7 +13,9 @@
         <div class="persons | l-container u-flow">
             <div class="persons__header">
                 <h1 th:text="${sectionTitle}"></h1>
-                <a href="/logout" class="persons__logout-action">Sair</a>
+                <form action="/logout" method="post" th:id="logout-form">
+                    <button type="submit" class="persons__logout-action">Sair</button>
+                </form>
             </div>
             <div class="persons__content">
                 <div th:replace="${content}"></div>

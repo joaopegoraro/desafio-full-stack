@@ -109,7 +109,7 @@
     --size: 1.5rem;
     height: var(--size);
     width: var(--size);
-    background-image: var(--icon);
+    background-image: var(--icon, url('../icons/arrow_foward.svg'));
     background-size: contain;
     margin-left: 1em;
 }

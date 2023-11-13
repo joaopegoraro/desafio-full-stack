@@ -76,9 +76,9 @@
 
                         <td class="person-table__cell person-table__cell--no-bg">
                             <a class="person-table__detail-action | btn"
-                                style="--icon: url('../icons/arrow_foward.svg')"
                                 th:href="|/pessoas/${person.id}/contatos/${contact.id}/editar|">Editar</a>
                         </td>
+
                         <td class="person-table__cell person-table__cell--no-bg">
                             <form th:action="|/pessoas/${person.id}/contatos/${contact.id}/deletar|" method="post"
                                 th:id="|delete-contact-form-${contact.id}|">

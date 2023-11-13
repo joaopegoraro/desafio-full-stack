@@ -4,8 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.edu.unoesc.desafiofullstack.dtos.LoginDto;
 import br.edu.unoesc.desafiofullstack.dtos.RegisterDto;
@@ -35,8 +33,8 @@ public class AuthController {
         return "auth/register";
     }
 
-    @RequestMapping(path = "/logout", method = { RequestMethod.GET, RequestMethod.POST })
-    public String logout(HttpServletRequest request) {
+    @PostMapping("/logout")
+    public String postLogout(HttpServletRequest request) {
         request.getSession().invalidate();
         return "auth/login";
     }
