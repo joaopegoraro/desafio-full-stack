@@ -2,11 +2,13 @@ package br.edu.unoesc.desafiofullstack.models;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -28,6 +30,9 @@ public class Person implements Serializable {
 
     @Column(nullable = false)
     private String gender;
+
+    @OneToMany(mappedBy = "person")
+    private List<Contact> contacts;
 
     public long getId() {
         return id;
@@ -67,5 +72,13 @@ public class Person implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
     }
 }

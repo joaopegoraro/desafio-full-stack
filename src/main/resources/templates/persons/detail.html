@@ -43,13 +43,13 @@
 
         <hr class="person-details__ruler">
 
-        <div class="u-flow" th:with="isListEmpty = ${contacts == null or contacts.empty}">
-            <a th:href="|/pessoas/${person.id}/contatos/cadastrar|" class="person-list__btn | btn btn--inverted">
+        <div class="u-flow" th:with="isListEmpty = ${person.contacts == null or person.contacts.empty}">
+            <a th:href="|/pessoas/${person.id}/contatos/cadastro|" class="person-list__btn | btn btn--inverted">
                 Adicionar contato
             </a>
 
 
-            <table th:with="isListEmpty = ${contacts == null or contacts.empty}" class="person-table">
+            <table class="person-table">
                 <caption class="person-table__caption">
                     <h2>Contatos</h2>
                 </caption>
@@ -62,14 +62,29 @@
                 </thead>
 
                 <tbody th:unless="${isListEmpty}">
-                    <tr class="person-table__row" th:each="contact: ${contacts}">
+                    <tr class="person-table__row" th:each="contact: ${person.contacts}">
                         <td class="person-table__cell" th:text="${contact.id}"></td>
                         <td class="person-table__cell person-table__cell--fill" th:text="${contact.name}"></td>
                         <td class="person-table__cell" th:text="${contact.phone}"></td>
-                        <td class="person-table__cell" th:text="${contact.email}"></td>
+
+                        <td th:if="${contact.email == null or contact.email.empty}" class="person-table__cell">
+                            N/A
+                        </td>
+                        <td th:unless="${contact.email == null or contact.email.empty}" class="person-table__cell"
+                            th:text="${contact.email}">
+                        </td>
+
                         <td class="person-table__cell person-table__cell--no-bg">
                             <a class="person-table__detail-action | btn"
-                                th:href="|/pessoas/${person.id}/contatos/${contact.id}|">Detalhes</a>
+                                style="--icon: url('../icons/arrow_foward.svg')"
+                                th:href="|/pessoas/${person.id}/contatos/${contact.id}/editar|">Editar</a>
+                        </td>
+                        <td class="person-table__cell person-table__cell--no-bg">
+                            <form th:action="|/pessoas/${person.id}/contatos/${contact.id}/deletar|" method="post"
+                                th:id="|delete-contact-form-${contact.id}|">
+                                <button type="submit" class="person-table__detail-action | btn btn--red"
+                                    style="--icon: url('../icons/delete.svg')">Deletar</button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>
@@ -115,7 +130,7 @@
                         <td class="person-table__cell" th:text="${address.state}"></td>
                         <td class="person-table__cell person-table__cell--no-bg">
                             <a class="person-table__detail-action | btn"
-                                th:href="|/pessoas/${person.id}/contatos/${contact.id}|">Detalhes</a>
+                                th:href="|/pessoas/${person.id}/enderecos/${address.id}/editar|">Editar</a>
                         </td>
                     </tr>
                 </tbody>
