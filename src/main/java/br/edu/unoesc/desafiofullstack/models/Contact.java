@@ -17,9 +17,10 @@ public class Contact {
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, unique = true)
     private String phone;
 
     private String email;

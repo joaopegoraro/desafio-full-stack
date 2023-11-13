@@ -57,12 +57,17 @@ public class ContactController {
             final Person person = personRepository.findById(personId).get();
             contact.setPerson(person);
             model.addAttribute("person", contact.getPerson());
+
+            // mantém apenas os números do telefone
+            contact.setPhone(contact.getPhone().replaceAll("\\D+", ""));
+
             contactRepository.save(contact);
+
             return "redirect:/pessoas/" + personId;
         } catch (NoSuchElementException e) {
             return "redirect:/error";
         } catch (DataIntegrityViolationException e) {
-            model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse nome");
+            model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse telefone");
             return "persons/register_contact";
         }
     }
@@ -76,14 +81,20 @@ public class ContactController {
 
         model.addAttribute("editMode", true);
         try {
-            final Person person = personRepository.findById(personId).get();
             contact.setId(id);
+
+            final Person person = personRepository.findById(personId).get();
             contact.setPerson(person);
             model.addAttribute("person", contact.getPerson());
+
+            // mantém apenas os números do telefone
+            contact.setPhone(contact.getPhone().replaceAll("\\D+", ""));
+
             contactRepository.save(contact);
+
             return "redirect:/pessoas/" + personId;
         } catch (DataIntegrityViolationException e) {
-            model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse nome");
+            model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse telefone");
             return "persons/register_contact";
         }
     }
