@@ -13,7 +13,7 @@ public class Contact {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "person_username")
+    @JoinColumn(name = "person_id")
     private Person person;
 
     private String phone;
