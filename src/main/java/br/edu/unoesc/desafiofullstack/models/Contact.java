@@ -1,5 +1,6 @@
 package br.edu.unoesc.desafiofullstack.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -15,6 +16,9 @@ public class Contact {
     @ManyToOne
     @JoinColumn(name = "person_id")
     private Person person;
+
+    @Column(nullable = false, unique = true)
+    private String name;
 
     private String phone;
 
@@ -34,6 +38,14 @@ public class Contact {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {

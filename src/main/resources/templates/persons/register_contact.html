@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
+    th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? |Editar Contato de ${person.name}| : |Cadastrar Contato de ${person.name}|, ~{ :: #person-form})}">
+
+<head>
+    <title th:text="${editMode} ? |Editar Contato de ${person.name}| : |Cadastrar Contato de ${person.name}|"></title>
+</head>
+
+<body>
+
+    <form
+        th:action="${editMode} ? |/pessoas/{person.id}/contatos/${contact.id}/editar| : '/pessoas/{person.id}/contatos/cadastro'"
+        th:object="${contact}" method="post" id="person-form">
+        <fieldset class="person-form | u-flow" form="auth-form">
+            <div class="person-form__fields">
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Nome:<br>
+                        <input required th:field="*{name}" class="person-form__input" type="text" name="name"
+                            id="name" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Telefone:<br>
+                        <input required th:field="*{phone}" class="person-form__input" id="phone" type="tel"
+                            name="phone"
+                            pattern="/^1\d\d(\d\d)?$|^0800 ?\d{3} ?\d{4}$|^(\(0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d\) ?|0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d[ .-]?)?(9|9[ .-])?[2-9]\d{3}[ .-]?\d{4}$/gm" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        E-mail: (Opcional)<br>
+                        <input th:field="*{email}" class="person-form__input" id="email" type="email" name="email" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="person-form__footer | u-flow">
+                <div th:if="${errorMessage} != null" class="person-form__error">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <button th:text="${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa'" type="submit" class="btn"></button>
+            </div>
+        </fieldset>
+    </form>
+
+</body>
+
+</html>

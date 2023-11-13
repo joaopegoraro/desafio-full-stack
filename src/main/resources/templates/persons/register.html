@@ -3,7 +3,7 @@
     th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa', ~{ :: #person-form})}">
 
 <head>
-    <title th:text="${title} ? 'Editar Pessoa' : 'Cadastrar Pessoa'"></title>
+    <title th:text="${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa'"></title>
 </head>
 
 <body>
@@ -60,7 +60,7 @@
                     <p th:text="${errorMessage}"></p>
                 </div>
 
-                <button th:text="${title} ? 'Editar Pessoa' : 'Cadastrar Pessoa'" type="submit" class="btn"></button>
+                <button th:text="${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa'" type="submit" class="btn"></button>
             </div>
         </fieldset>
     </form>

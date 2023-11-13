@@ -43,13 +43,13 @@
 
         <hr class="person-details__ruler">
 
-        <div class="u-flow" th:with="isListEmpty = ${contacts == null or contacts.empty}">
+        <div class="u-flow" th:with="isListEmpty = ${person.contacts == null or person.contacts.empty}">
             <a th:href="|/pessoas/${person.id}/contatos/cadastrar|" class="person-list__btn | btn btn--inverted">
                 Adicionar contato
             </a>
 
 
-            <table th:with="isListEmpty = ${contacts == null or contacts.empty}" class="person-table">
+            <table class="person-table">
                 <caption class="person-table__caption">
                     <h2>Contatos</h2>
                 </caption>
@@ -62,7 +62,7 @@
                 </thead>
 
                 <tbody th:unless="${isListEmpty}">
-                    <tr class="person-table__row" th:each="contact: ${contacts}">
+                    <tr class="person-table__row" th:each="contact: ${person.contacts}">
                         <td class="person-table__cell" th:text="${contact.id}"></td>
                         <td class="person-table__cell person-table__cell--fill" th:text="${contact.name}"></td>
                         <td class="person-table__cell" th:text="${contact.phone}"></td>
