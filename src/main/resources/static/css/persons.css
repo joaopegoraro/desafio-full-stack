@@ -82,9 +82,10 @@
 }
 
 .person-table__cell {
+    --cell-padding: 0.5em 1em;
     background-color: var(--clr-accent-light);
     border-radius: 5px;
-    padding: 0.5em 1em;
+    padding: var(--cell-padding);
 }
 
 .person-table__cell--fill {
@@ -92,6 +93,7 @@
 }
 
 .person-table__cell--no-bg {
+    --cell-padding: 0 0.25em;
     background-color: var(--clr-light);
 }
 
@@ -107,7 +109,7 @@
     --size: 1.5rem;
     height: var(--size);
     width: var(--size);
-    background-image: url("../icons/arrow_foward.svg");
+    background-image: var(--icon);
     background-size: contain;
     margin-left: 1em;
 }

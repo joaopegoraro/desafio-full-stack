@@ -36,7 +36,7 @@ public class ContactController {
         }
     }
 
-    @GetMapping("/pessoas/{personId}/contatos/${id}/editar")
+    @GetMapping("/pessoas/{personId}/contatos/{id}/editar")
     public String getEdit(@PathVariable("id") Long id, Model model) {
         model.addAttribute("editMode", true);
         try {
@@ -56,6 +56,7 @@ public class ContactController {
         try {
             final Person person = personRepository.findById(personId).get();
             contact.setPerson(person);
+            model.addAttribute("person", contact.getPerson());
             contactRepository.save(contact);
             return "redirect:/pessoas/" + personId;
         } catch (NoSuchElementException e) {
@@ -66,18 +67,31 @@ public class ContactController {
         }
     }
 
-    @PostMapping("/pessoas/{personId}/contatos/${id}/editar")
-    public String postEdit(@PathVariable("id") Long id, Contact contact, Model model) {
-        model.addAttribute("editMode", true);
+    @PostMapping("/pessoas/{personId}/contatos/{id}/editar")
+    public String postEdit(
+            @PathVariable("personId") Long personId,
+            @PathVariable("id") Long id,
+            Contact contact,
+            Model model) {
 
+        model.addAttribute("editMode", true);
         try {
+            final Person person = personRepository.findById(personId).get();
             contact.setId(id);
+            contact.setPerson(person);
+            model.addAttribute("person", contact.getPerson());
             contactRepository.save(contact);
-            return "redirect:/pessoas/" + id;
+            return "redirect:/pessoas/" + personId;
         } catch (DataIntegrityViolationException e) {
             model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse nome");
             return "persons/register_contact";
         }
+    }
+
+    @PostMapping("/pessoas/{personId}/contatos/{id}/deletar")
+    public String postDelete(@PathVariable("personId") Long personId, @PathVariable("id") Long id) {
+        contactRepository.deleteById(id);
+        return "redirect:/pessoas/" + personId;
     }
 
 }

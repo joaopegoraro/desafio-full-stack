@@ -9,7 +9,7 @@
 <body>
 
     <form
-        th:action="${editMode} ? |/pessoas/{person.id}/contatos/${contact.id}/editar| : '/pessoas/{person.id}/contatos/cadastro'"
+        th:action="${editMode} ? |/pessoas/${person.id}/contatos/${contact.id}/editar| : |/pessoas/${person.id}/contatos/cadastro|"
         th:object="${contact}" method="post" id="person-form">
         <fieldset class="person-form | u-flow" form="auth-form">
             <div class="person-form__fields">
@@ -26,7 +26,7 @@
                         Telefone:<br>
                         <input required th:field="*{phone}" class="person-form__input" id="phone" type="tel"
                             name="phone"
-                            pattern="/^1\d\d(\d\d)?$|^0800 ?\d{3} ?\d{4}$|^(\(0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d\) ?|0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d[ .-]?)?(9|9[ .-])?[2-9]\d{3}[ .-]?\d{4}$/gm" />
+                            pattern="^1\d\d(\d\d)?$|^0800 ?\d{3} ?\d{4}$|^(\(0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d\) ?|0?([1-9a-zA-Z][0-9a-zA-Z])?[1-9]\d[ .-]?)?(9|9[ .-])?[2-9]\d{3}[ .-]?\d{4}$" />
                     </label>
                 </div>
 
@@ -43,7 +43,8 @@
                     <p th:text="${errorMessage}"></p>
                 </div>
 
-                <button th:text="${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa'" type="submit" class="btn"></button>
+                <button th:text="${editMode} ? 'Editar Contato' : 'Cadastrar Contato'" type="submit"
+                    class="btn"></button>
             </div>
         </fieldset>
     </form>

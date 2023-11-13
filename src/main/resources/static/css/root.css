@@ -104,9 +104,9 @@ main {
 
 :where(.l-container) {
     --max-width: 90rem;
-    --padding: 1.5rem;
-    width: min(var(--max-width), 100% - var(--padding) * 2);
-    margin-inline: auto;
+    --margin: 1.5rem;
+    width: min(var(--max-width), 100% - var(--margin) * 2);
+    margin: auto;
     background-color: var(--clr-light);
     box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.2);
     border-radius: 0.3rem;
@@ -128,16 +128,11 @@ main {
 }
 
 .btn--inverted {
-    width: 100%;
-    transition: background-color 0.5s ease;
     background-color: var(--clr-secondary);
-    padding: 0.5em;
-    font-size: var(--fs-500);
-    color: var(--clr-light);
-    cursor: pointer;
-    border-radius: 5px;
-    text-transform: uppercase;
-    border: none;
+}
+
+.btn--red {
+    background-color: var(--clr-error);
 }
 
 .btn:hover,
