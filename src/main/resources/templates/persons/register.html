@@ -40,17 +40,11 @@
                     <label class="person-form__label">
                         Sexo:<br>
 
-                        <input required th:field="*{gender}" type="radio" id="genderMale" name="gender"
-                            value="masculino" />
-                        <label for="genderMale">Masculino</label>
-
-                        <input required th:field="*{gender}" type="radio" id="genderFemale" name="gender"
-                            value="feminino" />
-                        <label for="genderFemale">Feminino</label>
-
-                        <input required th:field="*{gender}" type="radio" id="genderOther" name="gender"
-                            value="outro" />
-                        <label for="genderOther">Outro</label>
+                        <select required th:field="*{gender}" name="gender" id="gender">
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                            <option value="other">Outro</option>
+                        </select>
                     </label>
                 </div>
             </div>
