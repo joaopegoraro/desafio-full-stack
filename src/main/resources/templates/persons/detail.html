@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{persons/base :: layout(~{ :: title}, ${person.name}, ~{ :: .person-details})}">
+    th:replace="~{persons/base :: layout(~{ :: title}, ${person.name}, ~{ :: .person-details}, null)}">
 
 <head>
     <title th:text="|Detalhes de ${person.name}|"></title>
@@ -97,7 +97,7 @@
 
         <hr class="person-details__ruler">
 
-        <div class="u-flow" th:with="isListEmpty = ${addresses == null or addresses.empty}">
+        <div class="u-flow" th:with="isListEmpty = ${person.addresses == null or person.addresses.empty}">
             <a th:href="|/pessoas/${person.id}/enderecos/cadastro|" class="person-list__btn | btn btn--inverted">
                 Adicionar endereço
             </a>
@@ -119,7 +119,7 @@
                 </thead>
 
                 <tbody th:unless="${isListEmpty}">
-                    <tr class="person-table__row" th:each="address: ${addresses}">
+                    <tr class="person-table__row" th:each="address: ${person.addresses}">
                         <td class="person-table__cell" th:text="${address.id}"></td>
                         <td class="person-table__cell person-table__cell--fill" th:text="${address.name}"></td>
                         <td class="person-table__cell" th:text="${address.cep}"></td>
@@ -128,9 +128,18 @@
                         <td class="person-table__cell" th:text="${address.district}"></td>
                         <td class="person-table__cell" th:text="${address.city}"></td>
                         <td class="person-table__cell" th:text="${address.state}"></td>
+
                         <td class="person-table__cell person-table__cell--no-bg">
                             <a class="person-table__detail-action | btn"
                                 th:href="|/pessoas/${person.id}/enderecos/${address.id}/editar|">Editar</a>
+                        </td>
+
+                        <td class="person-table__cell person-table__cell--no-bg">
+                            <form th:action="|/pessoas/${person.id}/enderecos/${address.id}/deletar|" method="post"
+                                th:id="|delete-address-form-${address.id}|">
+                                <button type="submit" class="person-table__detail-action | btn btn--red"
+                                    style="--icon: url('../icons/delete.svg')">Deletar</button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>

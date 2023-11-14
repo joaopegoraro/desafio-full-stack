@@ -34,6 +34,9 @@ public class Person implements Serializable {
     @OneToMany(mappedBy = "person")
     private List<Contact> contacts;
 
+    @OneToMany(mappedBy = "person")
+    private List<Address> addresses;
+
     public long getId() {
         return id;
     }
@@ -80,5 +83,13 @@ public class Person implements Serializable {
 
     public void setContacts(List<Contact> contacts) {
         this.contacts = contacts;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 }

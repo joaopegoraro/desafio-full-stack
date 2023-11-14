@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? |Editar Contato de ${person.name}| : |Cadastrar Contato de ${person.name}|, ~{ :: #person-form})}">
+    th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? |Editar Contato de ${person.name}| : |Cadastrar Contato de ${person.name}|, ~{ :: #person-form}, null)}">
 
 <head>
     <title th:text="${editMode} ? |Editar Contato de ${person.name}| : |Cadastrar Contato de ${person.name}|"></title>
