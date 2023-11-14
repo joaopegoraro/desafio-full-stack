@@ -2,7 +2,6 @@ package br.edu.unoesc.desafiofullstack.controllers;
 
 import java.util.NoSuchElementException;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,13 +56,23 @@ public class ContactController {
             final Person person = personRepository.findById(personId).get();
             contact.setPerson(person);
             model.addAttribute("person", contact.getPerson());
+
+            // mantém apenas os números do telefone
+            contact.setPhone(contact.getPhone().replaceAll("\\D+", ""));
+
+            if (contactRepository.existsWithPhoneAndPerson(contact.getPhone(), personId)) {
+                model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse telefone");
+                return "persons/register_contact";
+            } else if (contactRepository.existsWithEmailAndPerson(contact.getEmail(), personId)) {
+                model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse e-mail");
+                return "persons/register_contact";
+            }
+
             contactRepository.save(contact);
+
             return "redirect:/pessoas/" + personId;
         } catch (NoSuchElementException e) {
             return "redirect:/error";
-        } catch (DataIntegrityViolationException e) {
-            model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse nome");
-            return "persons/register_contact";
         }
     }
 
@@ -75,17 +84,27 @@ public class ContactController {
             Model model) {
 
         model.addAttribute("editMode", true);
-        try {
-            final Person person = personRepository.findById(personId).get();
-            contact.setId(id);
-            contact.setPerson(person);
-            model.addAttribute("person", contact.getPerson());
-            contactRepository.save(contact);
-            return "redirect:/pessoas/" + personId;
-        } catch (DataIntegrityViolationException e) {
-            model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse nome");
+
+        contact.setId(id);
+
+        final Person person = personRepository.findById(personId).get();
+        contact.setPerson(person);
+        model.addAttribute("person", contact.getPerson());
+
+        // mantém apenas os números do telefone
+        contact.setPhone(contact.getPhone().replaceAll("\\D+", ""));
+
+        if (contactRepository.existsWithPhoneAndPersonAndDifferentId(contact.getPhone(), personId, id)) {
+            model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse telefone");
+            return "persons/register_contact";
+        } else if (contactRepository.existsWithEmailAndPersonAndDifferentId(contact.getEmail(), personId, id)) {
+            model.addAttribute("errorMessage", "Já existe um contato cadastrado com esse e-mail");
             return "persons/register_contact";
         }
+
+        contactRepository.save(contact);
+
+        return "redirect:/pessoas/" + personId;
     }
 
     @PostMapping("/pessoas/{personId}/contatos/{id}/deletar")

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
+    th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? |Editar Endereço de ${person.name}| : |Cadastrar Endereço de ${person.name}|, ~{ :: #person-form}, ~{ :: script})}">
+
+<head>
+    <title th:text="${editMode} ? |Editar Endereço de ${person.name}| : |Cadastrar Endereço de ${person.name}|"></title>
+    <script src="/static/js/cep.js"></script>
+</head>
+
+<body>
+
+    <form
+        th:action="${editMode} ? |/pessoas/${person.id}/enderecos/${address.id}/editar| : |/pessoas/${person.id}/enderecos/cadastro|"
+        th:object="${address}" method="post" id="person-form">
+        <fieldset class="person-form | u-flow" form="auth-form">
+            <div class="person-form__fields">
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Nome:<br>
+                        <input required th:field="*{name}" class="person-form__input" type="text" name="name"
+                            id="name" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        CEP:<br>
+                        <input required th:field="*{cep}" class="person-form__input" id="cep" type="text" name="cep" size="9" maxlength="9" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Número:<br>
+                        <input required th:field="*{number}"
+                            class="person-form__input" id="number" type="number" size="5" maxlength="5" name="number" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Rua:<br>
+                        <input required readonly th:field="*{street}"
+                            class="person-form__input" id="street" type="text"
+                            name="street" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Bairro:<br>
+                        <input required readonly th:field="*{district}"
+                            class="person-form__input" id="district" type="text"
+                            name="district" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Município:<br>
+                        <input required readonly th:field="*{city}"
+                            class="person-form__input" id="city" type="text" name="city" />
+                    </label>
+                </div>
+
+                <div class="person-form__field">
+                    <label class="person-form__label">
+                        Estado:<br>
+                        <input required readonly th:field="*{state}"
+                            class="person-form__input" id="state" type="text" size="5" maxlength="2"
+                            name="state" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="person-form__footer | u-flow">
+                <div th:if="${errorMessage} != null" class="person-form__error">
+                    <p th:text="${errorMessage}"></p>
+                </div>
+
+                <button id="cep-btn" class="btn btn--inverted" type="button">Validar CEP</button>
+
+                <button id="submit-btn" th:text="${editMode} ? 'Editar Endereço' : 'Cadastrar Endereço'" type="submit"
+                    class="btn"></button>
+            </div>
+        </fieldset>
+    </form>
+
+</body>
+
+</html>

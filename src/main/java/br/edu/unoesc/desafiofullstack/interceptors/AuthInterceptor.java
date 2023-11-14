@@ -18,6 +18,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         this.authService = authService;
     }
 
+    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
         final HttpSession session = request.getSession();

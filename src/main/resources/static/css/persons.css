@@ -63,7 +63,14 @@
     font-size: var(--fs-500);
 }
 
+.person-form__input[readonly] {
+    border: none;
+    outline: none;
+    background-color: var(--clr-accent-light);
+}
+
 .person-form__footer {
+    --gap: 0.5rem;
     width: 100%;
 }
 
@@ -109,7 +116,7 @@
     --size: 1.5rem;
     height: var(--size);
     width: var(--size);
-    background-image: var(--icon);
+    background-image: var(--icon, url('../icons/arrow_foward.svg'));
     background-size: contain;
     margin-left: 1em;
 }

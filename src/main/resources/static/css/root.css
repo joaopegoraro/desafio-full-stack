@@ -135,6 +135,10 @@ main {
     background-color: var(--clr-error);
 }
 
+.btn[disabled] {
+    background-color: var(--clr-accent-light);
+}
+
 .btn:hover,
 .btn:focus {
     text-decoration: none;

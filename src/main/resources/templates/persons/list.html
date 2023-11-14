@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{persons/base :: layout(~{ :: title}, 'Lista de pessoas', ~{ :: .person-list})}">
+    th:replace="~{persons/base :: layout(~{ :: title}, 'Lista de pessoas', ~{ :: .person-list}, null)}">
 
 <head>
     <title>Pessoas</title>
@@ -29,7 +29,7 @@
                     <td class="person-table__cell person-table__cell--fill" th:text="${person.name}"></td>
                     <td class="person-table__cell" th:text="${person.cpf}"></td>
                     <td class="person-table__cell" th:text="${person.birthdate}"></td>
-                    <td class="person-table__cell" th:text="${person.gender}"></td>
+                    <td class="person-table__cell" th:text="${person.gender.toUpperCase()}"></td>
                     <td class="person-table__cell person-table__cell--no-bg">
                         <a class="person-table__detail-action | btn" th:href="|/pessoas/${person.id}|">Detalhes</a>
                     </td>

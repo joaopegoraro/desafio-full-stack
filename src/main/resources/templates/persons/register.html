@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa', ~{ :: #person-form})}">
+    th:replace="~{persons/base :: layout(~{ :: title}, ${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa', ~{ :: #person-form}, null)}">
 
 <head>
     <title th:text="${editMode} ? 'Editar Pessoa' : 'Cadastrar Pessoa'"></title>
