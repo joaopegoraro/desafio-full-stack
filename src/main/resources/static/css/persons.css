@@ -63,6 +63,12 @@
     font-size: var(--fs-500);
 }
 
+.person-form__input--disabled {
+    border: none;
+    outline: none;
+    background-color: var(--clr-accent-light);
+}
+
 .person-form__footer {
     width: 100%;
 }
