@@ -2,7 +2,6 @@ package br.edu.unoesc.desafiofullstack.controllers;
 
 import java.util.NoSuchElementException;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,14 +60,16 @@ public class AddressController {
             // mantém apenas os números do cep
             address.setCep(address.getCep().replaceAll("\\D+", ""));
 
+            if (addressRepository.existsWithCepAndPerson(address.getCep(), personId)) {
+                model.addAttribute("errorMessage", "Já existe um endereço cadastrado com esse CEP");
+                return "persons/register_address";
+            }
+
             addressRepository.save(address);
 
             return "redirect:/pessoas/" + personId;
         } catch (NoSuchElementException e) {
             return "redirect:/error";
-        } catch (DataIntegrityViolationException e) {
-            model.addAttribute("errorMessage", "Já existe um endereço cadastrado com esse CEP");
-            return "persons/register_address";
         }
     }
 
@@ -80,23 +81,24 @@ public class AddressController {
             Model model) {
 
         model.addAttribute("editMode", true);
-        try {
-            address.setId(id);
 
-            final Person person = personRepository.findById(personId).get();
-            address.setPerson(person);
-            model.addAttribute("person", address.getPerson());
+        // mantém apenas os números do cep
+        address.setCep(address.getCep().replaceAll("\\D+", ""));
 
-            // mantém apenas os números do cep
-            address.setCep(address.getCep().replaceAll("\\D+", ""));
-
-            addressRepository.save(address);
-
-            return "redirect:/pessoas/" + personId;
-        } catch (DataIntegrityViolationException e) {
+        if (addressRepository.existsWithCepAndPersonAndDifferentId(address.getCep(), personId, id)) {
             model.addAttribute("errorMessage", "Já existe um endereço cadastrado com esse CEP");
             return "persons/register_address";
         }
+
+        address.setId(id);
+
+        final Person person = personRepository.findById(personId).get();
+        address.setPerson(person);
+        model.addAttribute("person", address.getPerson());
+
+        addressRepository.save(address);
+
+        return "redirect:/pessoas/" + personId;
     }
 
     @PostMapping("/pessoas/{personId}/enderecos/{id}/deletar")
