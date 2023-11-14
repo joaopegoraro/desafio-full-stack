@@ -12,8 +12,7 @@
         <div class="person-details__info">
             <h2>Detalhes</h2>
 
-            <a th:href="|/pessoas/${person.id}/editar|" class="person-list__btn | btn btn--inverted">Editar
-                dados</a>
+            <a th:href="|/pessoas/${person.id}/editar|" class="person-list__btn | btn btn--inverted">Editar dados</a>
 
             <div class="person-details__field">
                 <span class="person-details__label">ID:</span>
@@ -43,15 +42,24 @@
 
         <hr class="person-details__ruler">
 
-        <div class="u-flow" th:with="isListEmpty = ${person.contacts == null or person.contacts.empty}">
-            <a th:href="|/pessoas/${person.id}/contatos/cadastro|" class="person-list__btn | btn btn--inverted">
-                Adicionar contato
-            </a>
+        <div th:with="isListEmpty = ${person.contacts == null or person.contacts.empty}">
 
-
-            <table class="person-table">
-                <caption class="person-table__caption">
+            <table class="person-table" th:with="isListFull = ${person.contacts.size >= 5}">
+                <caption class="person-table__caption | u-flow">
                     <h2>Contatos</h2>
+
+                    <div th:unless="${isListFull}">
+                        <a th:href="|/pessoas/${person.id}/contatos/cadastro|"
+                            class="person-list__btn | btn btn--inverted">
+                            Adicionar contato
+                        </a>
+                    </div>
+
+                    <div th:if="${isListFull}" class="person-list__full">
+                        <p>Você já atingiu o limite máximo de 5 contatos</p>
+                    </div>
+
+                    <br>
                 </caption>
 
                 <thead th:unless="${isListEmpty}" class="person-table__head">
@@ -97,14 +105,24 @@
 
         <hr class="person-details__ruler">
 
-        <div class="u-flow" th:with="isListEmpty = ${person.addresses == null or person.addresses.empty}">
-            <a th:href="|/pessoas/${person.id}/enderecos/cadastro|" class="person-list__btn | btn btn--inverted">
-                Adicionar endereço
-            </a>
+        <div th:with="isListEmpty = ${person.addresses == null or person.addresses.empty}">
 
-            <table class="person-table">
-                <caption class="person-table__caption">
+            <table class="person-table" th:with="isListFull = ${person.addresses.size >= 5}">
+                <caption class="person-table__caption | u-flow">
                     <h2>Endereços</h2>
+
+                    <div th:unless="${isListFull}">
+                        <a th:href="|/pessoas/${person.id}/enderecos/cadastro|"
+                            class="person-list__btn | btn btn--inverted">
+                            Adicionar endereço
+                        </a>
+                    </div>
+
+                    <div th:if="${isListFull}" class="person-list__full">
+                        <p>Você já atingiu o limite máximo de 5 endereços</p>
+                    </div>
+
+                    <br>
                 </caption>
 
                 <thead th:unless="${isListEmpty}" class="person-table__head">

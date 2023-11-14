@@ -52,6 +52,8 @@ function run() {
     // pega o CEP e extrai apenas os dígitos
     let cep = document.getElementById("cep").value.replace(/\D/g, "");
 
+    clearFields();
+
     let req = new XMLHttpRequest();
     let url = `https://viacep.com.br/ws/${cep}/json/`;
 
