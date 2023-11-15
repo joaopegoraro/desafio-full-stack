@@ -16,6 +16,8 @@ public class PersonFilter {
 
     private String orderBy;
 
+    private int size;
+
     public boolean isEmpty() {
         return (id == null)
                 && (name == null || name.isBlank())
@@ -24,6 +26,43 @@ public class PersonFilter {
                 && (gender == null || gender.isBlank())
                 && (sortBy == null || sortBy.isBlank())
                 && (orderBy == null || orderBy.isBlank());
+    }
+
+    public String asQueryString() {
+        final StringBuilder builder = new StringBuilder();
+        if (id != null && id != 0) {
+            builder.append("&id=");
+            builder.append(id);
+        }
+        if (name != null && !name.isEmpty()) {
+            builder.append("&name=");
+            builder.append(name);
+        }
+        if (cpf != null && !cpf.isEmpty()) {
+            builder.append("&cpf=");
+            builder.append(cpf);
+        }
+        if (birthdate != null && !birthdate.isEmpty()) {
+            builder.append("&birthdate=");
+            builder.append(birthdate);
+        }
+        if (gender != null && !gender.isEmpty()) {
+            builder.append("&gender=");
+            builder.append(gender);
+        }
+        if (sortBy != null && !sortBy.isEmpty()) {
+            builder.append("&sortBy=");
+            builder.append(sortBy);
+        }
+        if (orderBy != null && !orderBy.isEmpty()) {
+            builder.append("&orderBy=");
+            builder.append(orderBy);
+        }
+        if (size != 0) {
+            builder.append("&size=");
+            builder.append(size);
+        }
+        return builder.toString();
     }
 
     public Long getId() {
@@ -80,5 +119,13 @@ public class PersonFilter {
 
     public void setOrderBy(String orderBy) {
         this.orderBy = orderBy;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

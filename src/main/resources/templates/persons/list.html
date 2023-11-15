@@ -54,6 +54,7 @@
                             Sexo:<br>
 
                             <select th:field="*{gender}" name="gender" id="gender">
+                                <option value="">Escolher</option>
                                 <option value="masculino">Masculino</option>
                                 <option value="feminino">Feminino</option>
                                 <option value="outro">Outro</option>
@@ -85,6 +86,19 @@
                             </select>
                         </label>
                     </div>
+
+                    <div>
+                        <label class="person-form__label">
+                            Mostrar:<br>
+
+                            <select th:field="*{size}" name="size" id="size">
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                        </label>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -98,36 +112,51 @@
             <p>Nenhuma pessoa encontrada</p>
         </div>
 
-        <table class="person-table" th:unless="${isListEmpty}">
-            <thead class="person-table__head">
-                <th class="person-table__header">ID</th>
-                <th class="person-table__header">Nome</th>
-                <th class="person-table__header">CPF</th>
-                <th class="person-table__header">Nascimento</th>
-                <th class="person-table__header">Sexo</th>
-            </thead>
-            <tbody>
-                <tr class="person-table__row" th:each="person: ${list}">
-                    <td class="person-table__cell" th:text="${person.id}"></td>
-                    <td class="person-table__cell person-table__cell--fill" th:text="${person.name}"></td>
-                    <td class="person-table__cell" th:text="${person.cpf}"></td>
-                    <td class="person-table__cell" th:text="${person.birthdate}"></td>
-                    <td class="person-table__cell" th:text="${person.gender.toUpperCase()}"></td>
+        <div th:unless="${isListEmpty}" class="u-flow">
+            <table class="person-table">
+                <thead class="person-table__head">
+                    <th class="person-table__header">ID</th>
+                    <th class="person-table__header">Nome</th>
+                    <th class="person-table__header">CPF</th>
+                    <th class="person-table__header">Nascimento</th>
+                    <th class="person-table__header">Sexo</th>
+                </thead>
+                <tbody>
+                    <tr class="person-table__row" th:each="person: ${list}">
+                        <td class="person-table__cell" th:text="${person.id}"></td>
+                        <td class="person-table__cell person-table__cell--fill" th:text="${person.name}"></td>
+                        <td class="person-table__cell" th:text="${person.cpf}"></td>
+                        <td class="person-table__cell" th:text="${person.birthdate}"></td>
+                        <td class="person-table__cell" th:text="${person.gender.toUpperCase()}"></td>
 
-                    <td class="person-table__cell person-table__cell--no-bg">
-                        <a class="person-table__detail-action | btn" th:href="|/pessoas/${person.id}|">Detalhes</a>
-                    </td>
+                        <td class="person-table__cell person-table__cell--no-bg">
+                            <a class="person-table__detail-action | btn" th:href="|/pessoas/${person.id}|">Detalhes</a>
+                        </td>
 
-                    <td class="person-table__cell person-table__cell--no-bg">
-                        <form th:action="|/pessoas/${person.id}/deletar|" method="post"
-                            th:id="|delete-person-form-${person.id}|">
-                            <button type="submit" class="person-table__detail-action | btn btn--red"
-                                style="--icon: url('../icons/delete.svg')">Deletar</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        <td class="person-table__cell person-table__cell--no-bg">
+                            <form th:action="|/pessoas/${person.id}/deletar|" method="post"
+                                th:id="|delete-person-form-${person.id}|">
+                                <button type="submit" class="person-table__detail-action | btn btn--red"
+                                    style="--icon: url('../icons/delete.svg')">Deletar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="person-pagination">
+                <a class="person-pagination__page" th:href="|/pessoas?${queryString}|">&laquo;</a>
+                <a class="person-pagination__page"
+                    th:href="${page <= 1} ? |/pessoas?${queryString}| : |/pessoas?page=${page-1}${queryString}|">&lsaquo;</a>
+                <div th:each="pageNumber : ${pageNumbers}">
+                    <a class="person-pagination__page" th:attr="active=${pageNumber == page}"
+                        th:href="|/pessoas?page=${pageNumber}${queryString}|" th:text=${pageNumber}></a>
+                </div>
+                <a class="person-pagination__page"
+                    th:href="${page >= totalPages} ? '' : |/pessoas?page=${page+1}${queryString}|">&rsaquo;</a>
+                <a class="person-pagination__page" th:href="|/pessoas?page=${totalPages}${queryString}|">&raquo;</a>
+            </div>
+        </div>
     </div>
 
 </body>

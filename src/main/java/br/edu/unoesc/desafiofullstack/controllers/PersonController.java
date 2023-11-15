@@ -3,15 +3,24 @@ package br.edu.unoesc.desafiofullstack.controllers;
 import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.edu.unoesc.desafiofullstack.models.Person;
 import br.edu.unoesc.desafiofullstack.models.PersonFilter;
@@ -27,15 +36,19 @@ public class PersonController {
     }
 
     @GetMapping({ "/", "/pessoas" })
-    public String getPersons(PersonFilter filter, Model model) {
-        final List<Person> list;
+    public String getPersons(@RequestParam("page") Optional<Integer> page, PersonFilter filter, Model model) {
+        final Page<Person> list;
+        final int currentPage = page.orElse(1);
+
         if (filter.isEmpty()) {
-            list = personRepository.findAll();
+            final Order order = Order.asc("id");
+            final Sort sort = Sort.by(order);
+            list = personRepository.findAll(PageRequest.of(currentPage - 1, 10, sort));
         } else {
             final Person example = new Person();
             ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
                     .withIgnoreNullValues()
-                    .withIgnorePaths("contacts", "addresses", "id");
+                    .withIgnorePaths("contacts", "addresses", "id", "name", "cpf");
 
             if (filter.getId() != null) {
                 System.err.println(filter.getId());
@@ -60,12 +73,34 @@ public class PersonController {
                 example.setBirthdate(Date.valueOf(filter.getBirthdate()));
             }
 
-            example.setGender(filter.getGender());
+            if (filter.getGender() != null && !filter.getGender().isBlank()) {
+                example.setGender(filter.getGender());
+            }
 
-            list = personRepository.findAll(Example.of(example, exampleMatcher));
+            final Order order = filter.getOrderBy().equals("asc")
+                    ? Order.asc(filter.getSortBy())
+                    : Order.desc(filter.getSortBy());
+            final Pageable pagination = PageRequest.of(currentPage - 1, filter.getSize(), Sort.by(order));
+            list = personRepository.findAll(Example.of(example, exampleMatcher), pagination);
         }
+
         model.addAttribute("list", list);
         model.addAttribute("filter", filter);
+        model.addAttribute("queryString", filter.asQueryString());
+
+        int totalPages = list.getTotalPages();
+        if (totalPages > 0) {
+            final int rangeStart = Math.min(1, currentPage);
+            final int rangeEnd = Math.max(currentPage, totalPages);
+            final List<Integer> pageNumbers = IntStream.rangeClosed(rangeStart, rangeEnd)
+                    .boxed()
+                    .collect(Collectors.toList());
+
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("pageNumbers", pageNumbers);
+            model.addAttribute("page", currentPage);
+        }
+
         return "persons/list";
     }
 
