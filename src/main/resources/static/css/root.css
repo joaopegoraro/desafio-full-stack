@@ -78,6 +78,7 @@ hr {
 
 input {
   border-radius: 0.25rem;
+  max-width: max(200px, 80%);
   transition: border 0.5s ease;
   --input-color: var(--clr-secondary);
   outline-color: var(--input-color);
@@ -90,7 +91,7 @@ input:focus {
 }
 
 main {
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(
     239deg,
     var(--clr-secondary) 0%,
@@ -120,6 +121,7 @@ main {
 
 .btn {
   width: 100%;
+  max-width: max(280px, 80%);
   transition: background-color 0.5s ease;
   background-color: var(--clr-primary);
   padding: 0.5em;
@@ -161,6 +163,7 @@ main {
   display: flex;
   gap: 1em;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 /* || REPONSIVITY */
@@ -168,5 +171,14 @@ main {
 @media (min-width: 48em) {
   :where(.l-container) {
     --padding: 7rem;
+  }
+
+  .row {
+    flex-wrap: nowrap;
+  }
+
+  .btn,
+  input {
+    max-width: 100%;
   }
 }
