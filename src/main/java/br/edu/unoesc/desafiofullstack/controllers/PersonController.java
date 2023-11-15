@@ -48,12 +48,14 @@ public class PersonController {
             final Person example = new Person();
             ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
                     .withIgnoreNullValues()
-                    .withIgnorePaths("contacts", "addresses", "id", "name", "cpf");
+                    .withIgnorePaths("contacts", "addresses");
 
             if (filter.getId() != null) {
                 System.err.println(filter.getId());
                 exampleMatcher = exampleMatcher.withMatcher("id", ExampleMatcher.GenericPropertyMatchers.exact());
                 example.setId(filter.getId());
+            } else {
+                exampleMatcher = exampleMatcher.withIgnorePaths("id");
             }
 
             if (filter.getName() != null && !filter.getName().isBlank()) {

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{persons/base :: layout(~{ :: title}, 'Lista de pessoas', ~{ :: .person-list}, null)}">
+    th:replace="~{persons/base :: layout(~{ :: title}, 'Lista de pessoas', ~{ :: .person-list}, ~{ :: script})}">
 
 <head>
     <title>Pessoas</title>
+    <script src="/static/js/sort_table.js"></script>
 </head>
 
 <body>
@@ -102,7 +103,7 @@
                 </div>
 
                 <div class="row">
-                    <button type="reset" class="btn">Limpar filtro</button>
+                    <a href="/pessoas" class="btn">Limpar filtro</a>
                     <button type="submit" class="btn">Filtrar pessoas</button>
                 </div>
             </fieldset>
@@ -147,7 +148,7 @@
             <div class="person-pagination">
                 <a class="person-pagination__page" th:href="|/pessoas?${queryString}|">&laquo;</a>
                 <a class="person-pagination__page"
-                    th:href="${page <= 1} ? |/pessoas?${queryString}| : |/pessoas?page=${page-1}${queryString}|">&lsaquo;</a>
+                    th:href="${page <= 1} ? '' : |/pessoas?page=${page-1}${queryString}|">&lsaquo;</a>
                 <div th:each="pageNumber : ${pageNumbers}">
                     <a class="person-pagination__page" th:attr="active=${pageNumber == page}"
                         th:href="|/pessoas?page=${pageNumber}${queryString}|" th:text=${pageNumber}></a>
