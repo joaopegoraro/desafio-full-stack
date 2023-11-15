@@ -11,8 +11,91 @@
     <div class="person-list | u-flow" th:with="isListEmpty = ${list == null or list.empty}">
         <a href="/pessoas/cadastro" class="person-list__btn | btn btn--inverted">Cadastrar Pessoa</a>
 
+        <form action="/pessoas" th:object="${filter}" method="get" id="person-form">
+            <fieldset class="person-form" form="auth-form">
+                <caption>
+                    <h3>Filtro</h3>
+                </caption>
+
+                <div class="person-form__fields">
+                    <div class="person-form__field">
+                        <label class="person-form__label">
+                            ID:<br>
+                            <input th:field="*{id}" class="person-form__input" type="number" name="id" id="id" value=""
+                                width="4" />
+                        </label>
+                    </div>
+
+                    <div class="person-form__field">
+                        <label class="person-form__label">
+                            Nome:<br>
+                            <input th:field="*{name}" class="person-form__input" type="text" name="name" id="name" />
+                        </label>
+                    </div>
+
+                    <div class="person-form__field">
+                        <label class="person-form__label">
+                            CPF:<br>
+                            <input th:field="*{cpf}" class="person-form__input" id="cpf" type="text" name="cpf"
+                                pattern="([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})" />
+                        </label>
+                    </div>
+
+                    <div class="person-form__field">
+                        <label class="person-form__label">
+                            Data de nascimento:<br>
+                            <input th:field="*{birthdate}" class="person-form__input" id="birthdate" type="date"
+                                name="birthdate" />
+                        </label>
+                    </div>
+
+                    <div>
+                        <label class="person-form__label">
+                            Sexo:<br>
+
+                            <select th:field="*{gender}" name="gender" id="gender">
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label class="person-form__label">
+                            Classificar por:<br>
+
+                            <select th:field="*{sortBy}" name="sortBy" id="sortBy">
+                                <option value="id">ID</option>
+                                <option value="name">Nome</option>
+                                <option value="cpf">CPF</option>
+                                <option value="birthdate">Nascimento</option>
+                                <option value="gender">Sexo</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label class="person-form__label">
+                            Ordenar:<br>
+
+                            <select th:field="*{orderBy}" name="orderBy" id="orderBy">
+                                <option value="asc">ASC</option>
+                                <option value="desc">DESC</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <button type="reset" class="btn">Limpar filtro</button>
+                    <button type="submit" class="btn">Filtrar pessoas</button>
+                </div>
+            </fieldset>
+        </form>
+
         <div th:if="${isListEmpty}" class="person-list__empty">
-            <p>Ainda não existe nenhuma pessoa cadastrada</p>
+            <p>Nenhuma pessoa encontrada</p>
         </div>
 
         <table class="person-table" th:unless="${isListEmpty}">
@@ -30,8 +113,17 @@
                     <td class="person-table__cell" th:text="${person.cpf}"></td>
                     <td class="person-table__cell" th:text="${person.birthdate}"></td>
                     <td class="person-table__cell" th:text="${person.gender.toUpperCase()}"></td>
+
                     <td class="person-table__cell person-table__cell--no-bg">
                         <a class="person-table__detail-action | btn" th:href="|/pessoas/${person.id}|">Detalhes</a>
+                    </td>
+
+                    <td class="person-table__cell person-table__cell--no-bg">
+                        <form th:action="|/pessoas/${person.id}/deletar|" method="post"
+                            th:id="|delete-person-form-${person.id}|">
+                            <button type="submit" class="person-table__detail-action | btn btn--red"
+                                style="--icon: url('../icons/delete.svg')">Deletar</button>
+                        </form>
                     </td>
                 </tr>
             </tbody>

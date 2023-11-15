@@ -10,7 +10,7 @@
 
     <form th:action="${editMode} ? |/pessoas/${person.id}/editar| : '/pessoas/cadastro'" th:object="${person}"
         method="post" id="person-form">
-        <fieldset class="person-form | u-flow" form="auth-form">
+        <fieldset class="person-form | u-flow" form="register-person-form">
             <div class="person-form__fields">
                 <div class="person-form__field">
                     <label class="person-form__label">
@@ -43,7 +43,7 @@
                         <select required th:field="*{gender}" name="gender" id="gender">
                             <option value="masculino">Masculino</option>
                             <option value="feminino">Feminino</option>
-                            <option value="other">Outro</option>
+                            <option value="outro">Outro</option>
                         </select>
                     </label>
                 </div>

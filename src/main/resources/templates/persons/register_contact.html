@@ -11,7 +11,7 @@
     <form
         th:action="${editMode} ? |/pessoas/${person.id}/contatos/${contact.id}/editar| : |/pessoas/${person.id}/contatos/cadastro|"
         th:object="${contact}" method="post" id="person-form">
-        <fieldset class="person-form | u-flow" form="auth-form">
+        <fieldset class="person-form | u-flow" form="register-contact-form">
             <div class="person-form__fields">
                 <div class="person-form__field">
                     <label class="person-form__label">

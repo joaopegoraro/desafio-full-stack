@@ -150,6 +150,12 @@ main {
     background-color: var(--clr-primary);
 }
 
+.row {
+    display: flex;
+    gap: 1em;
+    width: 100%;
+}
+
 /* || REPONSIVITY */
 
 @media (min-width: 48em) {

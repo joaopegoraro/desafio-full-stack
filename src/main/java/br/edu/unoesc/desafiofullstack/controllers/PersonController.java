@@ -1,8 +1,12 @@
 package br.edu.unoesc.desafiofullstack.controllers;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.unoesc.desafiofullstack.models.Person;
+import br.edu.unoesc.desafiofullstack.models.PersonFilter;
 import br.edu.unoesc.desafiofullstack.repositories.PersonRepository;
 
 @Controller
@@ -22,9 +27,45 @@ public class PersonController {
     }
 
     @GetMapping({ "/", "/pessoas" })
-    public String getPersons(Model model) {
-        final Iterable<Person> list = personRepository.findAll();
+    public String getPersons(PersonFilter filter, Model model) {
+        final List<Person> list;
+        if (filter.isEmpty()) {
+            list = personRepository.findAll();
+        } else {
+            final Person example = new Person();
+            ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
+                    .withIgnoreNullValues()
+                    .withIgnorePaths("contacts", "addresses", "id");
+
+            if (filter.getId() != null) {
+                System.err.println(filter.getId());
+                exampleMatcher = exampleMatcher.withMatcher("id", ExampleMatcher.GenericPropertyMatchers.exact());
+                example.setId(filter.getId());
+            }
+
+            if (filter.getName() != null && !filter.getName().isBlank()) {
+                exampleMatcher = exampleMatcher.withMatcher("name",
+                        ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+                example.setName(filter.getName());
+            }
+
+            if (filter.getCpf() != null && !filter.getCpf().isBlank()) {
+                exampleMatcher = exampleMatcher.withMatcher("cpf",
+                        ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());
+                // mantém apenas os números do CPF
+                example.setCpf(filter.getCpf().replaceAll("\\D+", ""));
+            }
+
+            if (filter.getBirthdate() != null && !filter.getBirthdate().isBlank()) {
+                example.setBirthdate(Date.valueOf(filter.getBirthdate()));
+            }
+
+            example.setGender(filter.getGender());
+
+            list = personRepository.findAll(Example.of(example, exampleMatcher));
+        }
         model.addAttribute("list", list);
+        model.addAttribute("filter", filter);
         return "persons/list";
     }
 
@@ -89,6 +130,12 @@ public class PersonController {
             model.addAttribute("errorMessage", "Já existe uma pessoa cadastrada com esse CPF");
             return "persons/register";
         }
+    }
+
+    @PostMapping("/pessoas/{id}/deletar")
+    public String postDelete(@PathVariable("id") Long id) {
+        personRepository.deleteById(id);
+        return "redirect:/pessoas";
     }
 
 }
