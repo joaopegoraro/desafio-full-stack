@@ -49,3 +49,21 @@ Para auxiliar no entendimento, elaboramos um diagrama de classes simples contend
 - Sentido e coerência nas respostas aos questionamentos na entrevista de apresentação do desafio realizada pelo candidato.
 
 **Não esqueça de documentar o processo necessário para rodar a aplicação.**
+
+## Implementação
+
+### Suposições
+- Telefone é obrigatório no cadastro de Contato, porém e-mail é opcional;
+- Retorno da API ViaCEP que não vem com nenhum dado de endereço é tratado como CEP inválido;
+- Tanto Contatos quanto Endereços precisam de um nome (ex: Casa, Trabalho, Mãe, etc.);
+- Cada Pessoa pode ter registrado no máximo 5 endereços e 5 contatos;
+
+### Como rodar
+
+Não foi usado nenhum framework ou biblioteca para a interface, 
+então não é necessário nenhuma etapa adicional para o rodar o frontend. Apenas a rotina normal para rodar um projeto de Spring já basta:
+- Atualizar `application.properties`:
+  - O projeto espera que já exista um banco MySQL chamado "desafio", porém se for usar um banco diferente basta mudar a opção `spring.datasource.url`;
+  - Mudar `spring.datasource.username` e `spring.datasource.password` para o login e senha do seu banco;
+- `mvn spring-boot:run` ou `./mvnw spring-boot:run` dentro da raíz do projeto;
+- Abrir `http://localhost:8080` no seu navegador;
