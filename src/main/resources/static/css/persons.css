@@ -1,141 +1,222 @@
 @import url("root.css");
 
 .persons {
-    --gap: 2rem;
+  --gap: 2rem;
 }
 
 .persons__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .persons__logout-action {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .persons__logout-action::after {
-    content: "";
-    display: inline-block;
-    --size: 2rem;
-    height: var(--size);
-    width: var(--size);
-    background-image: url("../icons/login.svg");
-    background-size: contain;
+  content: "";
+  display: inline-block;
+  --size: 2rem;
+  height: var(--size);
+  width: var(--size);
+  background-image: url("../icons/login.svg");
+  background-size: contain;
 }
 
 .person-list__btn {
-    width: 20%;
-    padding: 1rem;
+  width: 20%;
+  padding: 1rem;
 }
 
 .person-list__btn::before {
-    content: "";
-    display: inline-block;
-    --size: 2rem;
-    vertical-align: -25%;
-    height: var(--size);
-    width: var(--size);
-    background-image: url("../icons/person_add.svg");
-    background-size: contain;
-    margin-right: 1em;
+  content: "";
+  display: inline-block;
+  --size: 2rem;
+  vertical-align: -25%;
+  height: var(--size);
+  width: var(--size);
+  background-image: url("../icons/person_add.svg");
+  background-size: contain;
+  margin-right: 1em;
 }
 
 .person-form {
-    border: 0;
-    display: flex;
-    gap: 2em;
-    flex-direction: column;
-    align-items: start;
+  border: 0;
+  display: flex;
+  gap: 2em;
+  flex-direction: column;
+  align-items: start;
 }
 
 .person-form__fields {
-    display: flex;
-    gap: 2em;
-    flex-wrap: wrap;
-    align-items: center;
+  display: flex;
+  gap: 2em;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .person-form__label {
-    color: var(--clr-primary);
-    font-size: var(--fs-500);
+  color: var(--clr-primary);
+  font-size: var(--fs-500);
 }
 
 .person-form__input[readonly] {
-    border: none;
-    outline: none;
-    background-color: var(--clr-accent-light);
+  border: none;
+  outline: none;
+  background-color: var(--clr-accent-light);
 }
 
 .person-form__footer {
-    --gap: 0.5rem;
-    width: 100%;
+  --gap: 0.5rem;
+  width: 100%;
 }
 
 .person-form__error {
-    color: var(--clr-error);
-    text-align: start;
-    margin-inline-end: auto;
+  color: var(--clr-error);
+  text-align: start;
+  margin-inline-end: auto;
 }
 
 .person-table__caption {
-    text-align: start;
+  text-align: start;
 }
 
 .person-table__header {
-    text-align: start;
+  text-align: center;
+  transition: background-color 0.3s;
+  color: var(--clr-dark);
+  padding: 0.5em 1em;
+  border: 1px solid var(--clr-accent-light);
+  cursor: pointer;
+  user-select: none;
+}
+
+.person-table__header:hover,
+.person-table__header:focus {
+  text-decoration: none;
+}
+
+.person-table__header::after {
+  content: "\25B4 \25BE";
+  margin-left: 1em;
+  vertical-align: 5%;
+}
+
+.person-table__header[orderBy="asc"]::after {
+  content: "\25B4";
+}
+
+.person-table__header[orderBy="desc"]::after {
+  content: "\25BE";
+}
+
+.person-table__header:hover:not([orderBy]) {
+  background-color: var(--clr-accent-light);
+}
+
+.person-table__header[orderBy] {
+  background-color: var(--clr-primary);
+  color: var(--clr-light);
+}
+
+.person-table__header:first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.person-table__header:last-of-type {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .person-table__cell {
-    --cell-padding: 0.5em 1em;
-    background-color: var(--clr-accent-light);
-    border-radius: 5px;
-    padding: var(--cell-padding);
+  --cell-padding: 0.5em 1em;
+  background-color: var(--clr-accent-light);
+  border-radius: 5px;
+  padding: var(--cell-padding);
 }
 
 .person-table__cell--fill {
-    width: 100%;
+  width: 100%;
 }
 
 .person-table__cell--no-bg {
-    --cell-padding: 0 0.25em;
-    background-color: var(--clr-light);
+  --cell-padding: 0 0.25em;
+  background-color: var(--clr-light);
 }
 
 .person-table__detail-action {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .person-table__detail-action::after {
-    content: "";
-    display: inline-block;
-    --size: 1.5rem;
-    height: var(--size);
-    width: var(--size);
-    background-image: var(--icon, url('../icons/arrow_foward.svg'));
-    background-size: contain;
-    margin-left: 1em;
+  content: "";
+  display: inline-block;
+  --size: 1.5rem;
+  height: var(--size);
+  width: var(--size);
+  background-image: var(--icon, url("../icons/arrow_foward.svg"));
+  background-size: contain;
+  margin-left: 1em;
 }
 
 .person-details__info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .person-details__field {
-    display: inline;
+  display: inline;
 }
 
 .person-details__label {
-    color: var(--clr-primary);
-    font-weight: var(--fw-semi-bold);
+  color: var(--clr-primary);
+  font-weight: var(--fw-semi-bold);
 }
 
 .person-details__ruler {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.person-pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.person-pagination__page {
+  transition: background-color 0.3s;
+  color: var(--clr-dark);
+  padding: 0.5em 1em;
+  border: 1px solid var(--clr-accent-light);
+}
+.person-pagination__page:hover,
+.person-pagination__page:focus {
+  text-decoration: none;
+}
+
+.person-pagination__page:hover:not([active="true"]) {
+  background-color: var(--clr-accent-light);
+}
+
+.person-pagination__page[active="true"] {
+  background-color: var(--clr-primary);
+  color: var(--clr-light);
+}
+
+.person-pagination__page:first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.person-pagination__page:last-of-type {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }

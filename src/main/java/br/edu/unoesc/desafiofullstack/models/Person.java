@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,10 +33,10 @@ public class Person implements Serializable {
     @Column(nullable = false)
     private String gender;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Contact> contacts;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Address> addresses;
 
     public long getId() {

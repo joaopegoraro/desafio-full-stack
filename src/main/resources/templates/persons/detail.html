@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-BR"
-    th:replace="~{persons/base :: layout(~{ :: title}, ${person.name}, ~{ :: .person-details}, null)}">
+    th:replace="~{persons/base :: layout(~{ :: title}, ${person.name}, ~{ :: .person-details},  ~{ :: script})}">
 
 <head>
     <title th:text="|Detalhes de ${person.name}|"></title>
+    <script src="/static/js/sort_table.js"></script>
 </head>
 
 <body>
