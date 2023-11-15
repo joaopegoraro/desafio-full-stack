@@ -85,7 +85,51 @@
 }
 
 .person-table__header {
-  text-align: start;
+  text-align: center;
+  transition: background-color 0.3s;
+  color: var(--clr-dark);
+  padding: 0.5em 1em;
+  border: 1px solid var(--clr-accent-light);
+  cursor: pointer;
+  user-select: none;
+}
+
+.person-table__header:hover,
+.person-table__header:focus {
+  text-decoration: none;
+}
+
+.person-table__header::after {
+  content: "\25B4 \25BE";
+  margin-left: 1em;
+  vertical-align: 5%;
+}
+
+.person-table__header[orderBy="asc"]::after {
+  content: "\25B4";
+}
+
+.person-table__header[orderBy="desc"]::after {
+  content: "\25BE";
+}
+
+.person-table__header:hover:not([orderBy]) {
+  background-color: var(--clr-accent-light);
+}
+
+.person-table__header[orderBy] {
+  background-color: var(--clr-primary);
+  color: var(--clr-light);
+}
+
+.person-table__header:first-of-type {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.person-table__header:last-of-type {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .person-table__cell {
